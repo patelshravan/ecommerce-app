@@ -1,0 +1,72 @@
+CREATE TABLE customers(id int not null primary key auto_increment,
+firstname varchar(20),
+lastname varchar(20),
+email varchar(50),
+contact_no varchar(10),
+location varchar(50));
+
+CREATE TABLE orders(id int not null primary key auto_increment,
+status varchar(20),
+customer_id int,
+FOREIGN KEY(customer_id) REFERENCES customers(id));
+
+CREATE TABLE products(id int not null primary key auto_increment,
+title varchar(20),
+description varchar(300),
+image_url varchar(250), 
+quantity int, 
+price float);
+
+CREATE TABLE orders_data(id int not null primary key auto_increment,
+quantity int,
+price float,
+order_id int,
+product_id int,
+FOREIGN KEY(order_id) REFERENCES orders(id),
+FOREIGN KEY(product_id) REFERENCES products(id));
+
+CREATE TABLE payments(id int not null primary key auto_increment,
+date date,
+amount float,
+order_id int,
+mode_of_payment varchar(20),
+FOREIGN KEY(order_id) REFERENCES orders(id));
+
+CREATE TABLE feedback(id int not null primary key auto_increment,
+image_url varchar(250),
+product_id int,
+customer_id int,
+description varchar(500),
+FOREIGN KEY(product_id) REFERENCES products(id),
+FOREIGN KEY(customer_id) REFERENCES customers(id)); 
+
+CREATE TABLE vendor(id int not null primary key auto_increment,
+name varchar(20),
+email varchar(50),
+contact_no varchar(12));
+
+CREATE TABLE delivery(id int not null primary key auto_increment,
+order_id int,
+status varchar(300),
+location varchar(50),
+vendor_id  int,
+FOREIGN KEY(order_id) REFERENCES orders(id),
+FOREIGN KEY(vendor_id) REFERENCES vendor(id));
+
+
+create seller table : CREATE TABLE seller(id int not null primary key auto_increment,
+name varchar(20),
+location varchar(50),
+email varchar(50),
+product_id int,
+price float,
+quantity int,
+contact_no varchar(10),
+FOREIGN KEY(product_id) REFERENCES products(id));
+
+create staff table : CREATE TABLE staff(id int not null primary key auto_increment,
+firstname varchar(20),
+lastname varchar(20),
+email varchar(50),
+contact_no varchar(10),
+empid int);

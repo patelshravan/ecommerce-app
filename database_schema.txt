@@ -1,0 +1,19 @@
+products - id (primary key), title, description, image_url, quantity, price, 
+
+orders - id, status, customer_id 
+
+orders_data - id, order_id, product_id, quantity, price
+
+customers - id, firstname, lastname , email, contact_no, location,
+
+payments - id, date, amount, order_id, mode_of_payment,
+
+feedback - id, product_id, customer_id, image_url, description,
+
+delivery - id, order_id, status, location, vendor_id,
+
+vendor - id, name, email, contact_no,
+
+seller - id, name, location, email, contact_no, product_id, price, quantity
+
+staff - id, name, email, contact_no, empi_id,
