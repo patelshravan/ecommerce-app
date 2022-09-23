@@ -1,8 +1,9 @@
 CREATE TABLE customers(id int not null primary key auto_increment,
 firstname varchar(20),
 lastname varchar(20),
-email varchar(50),
-contact_no varchar(10),
+email varchar(50) unique,
+contact_no varchar(10) unique,
+password varchar(6) not null,
 location varchar(50));
 
 CREATE TABLE orders(id int not null primary key auto_increment,
@@ -26,7 +27,7 @@ FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(product_id) REFERENCES products(id));
 
 CREATE TABLE payments(id int not null primary key auto_increment,
-date date,
+date_of_payment date,
 amount float,
 order_id int,
 mode_of_payment varchar(20),
@@ -41,7 +42,7 @@ FOREIGN KEY(product_id) REFERENCES products(id),
 FOREIGN KEY(customer_id) REFERENCES customers(id)); 
 
 CREATE TABLE vendor(id int not null primary key auto_increment,
-name varchar(20),
+name_of_vendor varchar(20),
 email varchar(50),
 contact_no varchar(12));
 
@@ -54,8 +55,8 @@ FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(vendor_id) REFERENCES vendor(id));
 
 
-create seller table : CREATE TABLE seller(id int not null primary key auto_increment,
-name varchar(20),
+CREATE TABLE seller(id int not null primary key auto_increment,
+name_of_seller varchar(20),
 location varchar(50),
 email varchar(50),
 product_id int,
@@ -64,9 +65,21 @@ quantity int,
 contact_no varchar(10),
 FOREIGN KEY(product_id) REFERENCES products(id));
 
-create staff table : CREATE TABLE staff(id int not null primary key auto_increment,
+CREATE TABLE staff(id int not null primary key auto_increment,
 firstname varchar(20),
 lastname varchar(20),
 email varchar(50),
 contact_no varchar(10),
-empid int);
+empid int not null unique);
+
+
+CREATE TABLE shopping_cart(id int not null primary key auto_increment,
+product_id int,
+quantity int,
+total_amount float,
+date_added date,
+customer_id int,
+FOREIGN KEY(product_id) REFERENCES products(id),
+FOREIGN KEY(customer_id) REFERENCES customers(id));
+
+

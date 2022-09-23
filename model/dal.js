@@ -25,3 +25,15 @@ exports.getAllProducts = function () {
     });
   });
 };
+
+exports.getProductById = function (id) {
+  return new Promise((resolve) => {
+    let command = `SELECT * FROM products WHERE id="${id}"`;
+    sql.query(command, (err, rows, fields) => {
+      if (err) {
+        console.log("Error:", err);
+      }
+      resolve(rows);
+    });
+  });
+};

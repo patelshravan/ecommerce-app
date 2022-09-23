@@ -5,3 +5,9 @@ exports.getAll = async (req, res) => {
   data = await dal.getAllProducts();
   res.send(data);
 };
+
+exports.getById = async (req, res) => {
+  let data = [];
+  data = await dal.getProductById(req.params.id);
+  res.send(data);
+};
