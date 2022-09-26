@@ -29,7 +29,8 @@ exports.getProductById = function (id) {
 exports.insert = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO products(title,description,,image_url,quantity,price) values("${data.title}","${data.description}","${data.image_url}","${data.quantity}","${data.price}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO products(title,description,,image_url,quantity,price,created_at,modified_at) values("${data.title}","${data.description}","${data.image_url}","${data.quantity}","${data.price}",${timeStamp},${timeStamp});`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);

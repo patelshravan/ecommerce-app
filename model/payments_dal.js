@@ -28,7 +28,8 @@ exports.getById = function (id) {
 exports.insert = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO payments(date_of_payment,amount,order_id,mode_of_payment,created_date,modified_date) values("${data.date_of_payment}","${data.amount}","${data.order_id}","${data.mode_of_payment}","${data.created_date}","${data.modified_date}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO payments(date_of_payment,amount,order_id,mode_of_payment,created_at,modified_at) values("${data.date_of_payment}","${data.amount}","${data.order_id}","${data.mode_of_payment}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);

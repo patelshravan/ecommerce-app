@@ -23,9 +23,11 @@ exports.customer_login = function (req) {
 exports.customer_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO customers(firstname,lastname,email,contact_no,password, location) values("${data.firstname}","${data.lastname}","${data.email}","${data.contact_no}","${data.password}","${data.location}","${data.created_date}","${data.modified_date}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO customers(firstname,lastname,email,contact_no,password, location, created_at, modified_at) values("${data.firstname}","${data.lastname}","${data.email}","${data.contact_no}","${data.password}","${data.location}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
+        console.log(err);
         resolve("Failed, Enter Valid Details!");
       } else {
         resolve("Registered!");
@@ -57,7 +59,8 @@ exports.seller_login = function (req) {
 exports.seller_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO seller(name_of_seller,location,email,product_id,price, quantity, contact_no, password) values("${data.name_of_seller}","${data.location}","${data.email}","${data.product_id}","${data.price}","${data.quantity}","${data.contact_no}","${data.password}","${data.created_date}","${data.modified_date}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO seller(name_of_seller,location,email,product_id,price, quantity, contact_no, password, created_at, modified_at) values("${data.name_of_seller}","${data.location}","${data.email}","${data.product_id}","${data.price}","${data.quantity}","${data.contact_no}","${data.password}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed, Enter Valid Details!");
@@ -91,7 +94,8 @@ exports.staff_login = function (req) {
 exports.staff_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO seller(firstname,lastname,email, contact_no,empid,password) values("${data.firstname}","${data.lastname}","${data.email}","${data.contact_no}","${data.empid}","${data.password}","${data.created_date}","${data.modified_date}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO seller(firstname,lastname,email, contact_no,empid,password,created_at,modified_at) values("${data.firstname}","${data.lastname}","${data.email}","${data.contact_no}","${data.empid}","${data.password}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed, Enter Valid Details!");
@@ -125,7 +129,8 @@ exports.vendor_login = function (req) {
 exports.vendor_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
-    let command = `INSERT INTO vendor(name_of_vendor,email,password, contact_no,modified_date,created_date) values("${data.name_of_vendor}","${data.email}","${data.password}","${data.contact_no}","${data.created_date}","${data.modified_date}");`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO vendor(name_of_vendor,email,password, contact_no,modified_at,created_at) values("${data.name_of_vendor}","${data.email}","${data.password}","${data.contact_no}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed, Enter Valid Details!");

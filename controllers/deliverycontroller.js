@@ -1,8 +1,8 @@
-const dal = require("../model/feedback_dal");
+const dal = require("../model/delivery_dal");
 
 exports.getAll = async (req, res) => {
   let data = [];
-  data = await dal.getAllFeedback();
+  data = await dal.getAllDelivery();
   res.send(data);
 };
 
