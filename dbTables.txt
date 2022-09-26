@@ -4,11 +4,15 @@ lastname varchar(20),
 email varchar(50) unique,
 contact_no varchar(10) unique,
 password varchar(6) not null,
-location varchar(50));
+location varchar(50),
+modified_date date,
+created_date date);
 
 CREATE TABLE orders(id int not null primary key auto_increment,
 status varchar(20),
 customer_id int,
+created_date date,
+modified_date date,
 FOREIGN KEY(customer_id) REFERENCES customers(id));
 
 CREATE TABLE products(id int not null primary key auto_increment,
@@ -16,6 +20,8 @@ title varchar(20),
 description varchar(300),
 image_url varchar(250), 
 quantity int, 
+created_date date,
+modified_date date,
 price float);
 
 CREATE TABLE orders_data(id int not null primary key auto_increment,
@@ -23,6 +29,8 @@ quantity int,
 price float,
 order_id int,
 product_id int,
+created_date date,
+modified_date date,
 FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(product_id) REFERENCES products(id));
 
@@ -31,6 +39,8 @@ date_of_payment date,
 amount float,
 order_id int,
 mode_of_payment varchar(20),
+created_date date,
+modified_date date,
 FOREIGN KEY(order_id) REFERENCES orders(id));
 
 CREATE TABLE feedback(id int not null primary key auto_increment,
@@ -38,19 +48,26 @@ image_url varchar(250),
 product_id int,
 customer_id int,
 description varchar(500),
+created_date date,
+modified_date date,
 FOREIGN KEY(product_id) REFERENCES products(id),
 FOREIGN KEY(customer_id) REFERENCES customers(id)); 
 
 CREATE TABLE vendor(id int not null primary key auto_increment,
 name_of_vendor varchar(20),
-email varchar(50),
-contact_no varchar(12));
+email varchar(50) unique,
+password varchar(6) not null,
+created_date date,
+modified_date date,
+contact_no varchar(12) unique);
 
 CREATE TABLE delivery(id int not null primary key auto_increment,
 order_id int,
 status varchar(300),
 location varchar(50),
 vendor_id  int,
+created_date date,
+modified_date date,
 FOREIGN KEY(order_id) REFERENCES orders(id),
 FOREIGN KEY(vendor_id) REFERENCES vendor(id));
 
@@ -58,27 +75,33 @@ FOREIGN KEY(vendor_id) REFERENCES vendor(id));
 CREATE TABLE seller(id int not null primary key auto_increment,
 name_of_seller varchar(20),
 location varchar(50),
-email varchar(50),
+email varchar(50) unique,
+password varchar(6) not null,
 product_id int,
 price float,
 quantity int,
-contact_no varchar(10),
+contact_no varchar(10) unique,
+created_date date,
+modified_date date,
 FOREIGN KEY(product_id) REFERENCES products(id));
 
 CREATE TABLE staff(id int not null primary key auto_increment,
 firstname varchar(20),
 lastname varchar(20),
-email varchar(50),
-contact_no varchar(10),
+email varchar(50) unique,
+password varchar(6) not null,
+contact_no varchar(10) unique,
+created_date date,
+modified_date date,
 empid int not null unique);
-
 
 CREATE TABLE shopping_cart(id int not null primary key auto_increment,
 product_id int,
 quantity int,
 total_amount float,
-date_added date,
 customer_id int,
+created_date date,
+modified_date date,
 FOREIGN KEY(product_id) REFERENCES products(id),
 FOREIGN KEY(customer_id) REFERENCES customers(id));
 

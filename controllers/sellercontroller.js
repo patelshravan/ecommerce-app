@@ -1,21 +1,15 @@
-const dal = require("../model/products_dal");
+const dal = require("../model/sellers_dal");
 
 exports.getAll = async (req, res) => {
   let data = [];
-  data = await dal.getAllProducts();
+  data = await dal.getAllSellers();
   res.send(data);
 };
 
 exports.getById = async (req, res) => {
   let data = [];
-  data = await dal.getProductById(req.params.id);
+  data = await dal.getById(req.params.id);
   res.send(data);
-};
-
-exports.insert = async (req, res) => {
-  let result = [];
-  result = await dal.insert(req);
-  res.send(result);
 };
 
 exports.update = async (req, res) => {
