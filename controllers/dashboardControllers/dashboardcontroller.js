@@ -30,9 +30,21 @@ exports.getCustomerProfile = async (req, res) => {
   res.send(data);
 };
 
-exports.getSellerInfo = async (req, res) => {
+exports.getSellerProfile = async (req, res) => {
   let data = [];
   data = await dal.getSellerPersonalInfo();
+  res.send(data);
+};
+
+exports.getSellerProducts = async (req, res) => {
+  let data = [];
+  data = await dal.getSellerProducts(req.params.id);
+  res.send(data);
+};
+
+exports.getSellerOrders = async (req, res) => {
+  let data = [];
+  data = await dal.getSellerOrders(req.params.id);
   res.send(data);
 };
 

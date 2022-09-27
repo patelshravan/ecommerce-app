@@ -12,9 +12,9 @@ exports.getById = async (req, res) => {
   res.send(data);
 };
 
-exports.insert = async (req, res) => {
+exports.placeOrder = async (req, res) => {
   let result = [];
-  result = await dal.insert(req);
+  result = await dal.placeOrder(req);
   res.send(result);
 };
 

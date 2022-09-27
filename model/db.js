@@ -5,6 +5,7 @@ const connUri = {
   user: "root",
   password: "sp@123",
   database: "ecommerce",
+  multipleStatements: true,
 };
 
 const conn = mysql.createConnection(connUri);

@@ -65,15 +65,14 @@ module.exports = function (app) {
     .put(staffController.update);
 
   // Orders
-  app
-    .route("/api/orders")
-    .get(ordersController.getAll)
-    .post(ordersController.insert);
+  app.route("/api/orders").get(ordersController.getAll);
   app
     .route("/api/orders/:id")
     .get(ordersController.getById)
     .delete(ordersController.remove)
     .put(ordersController.update);
+
+  app.route("/api/orders/place-order").post(ordersController.placeOrder);
 
   // Orders_data
   app
@@ -154,7 +153,15 @@ module.exports = function (app) {
     .get(dashboardController.getCustomerProfile); // get customer's information including orders,payaments,etc
   app
     .route("/api/dashboard/seller-profile")
-    .get(dashboardController.getSellerInfo); // get seller's personal information
+    .get(dashboardController.getSellerProfile); // get seller's personal information
+
+  app
+    .route("/api/dashboard/seller-products/:id")
+    .get(dashboardController.getSellerProducts);
+
+  app
+    .route("/api/dashboard/seller-orders/:id")
+    .get(dashboardController.getSellerOrders);
 
   app
     .route("/api/dashboard/vendor-profile")
