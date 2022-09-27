@@ -29,7 +29,7 @@ exports.insert = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `INSERT INTO payments(date_of_payment,amount,order_id,mode_of_payment,created_at,modified_at) values("${data.date_of_payment}","${data.amount}","${data.order_id}","${data.mode_of_payment}","${timeStamp}","${timeStamp}");`;
+    let command = `INSERT INTO payments(amount,order_id,mode_of_payment,created_at,modified_at) values("${data.amount}","${data.order_id}","${data.mode_of_payment}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);
@@ -55,7 +55,8 @@ exports.remove = function (id) {
 
 exports.update = function (id, data) {
   return new Promise((resolve) => {
-    let command = `UPDATE payments SET contact_no="${data.contact_no}" WHERE id="${id}"`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `UPDATE payments SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed to update.");

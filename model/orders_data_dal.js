@@ -55,7 +55,8 @@ exports.remove = function (id) {
 
 exports.update = function (id, data) {
   return new Promise((resolve) => {
-    let command = `UPDATE orders_data SET contact_no="${data.contact_no}" WHERE id="${id}"`;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `UPDATE orders_data SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed to update.");

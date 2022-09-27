@@ -10,6 +10,7 @@ const feedbackController = require("./controllers/feedbackcontroller");
 const vendorController = require("./controllers/vendorcontroller");
 const deliveryController = require("./controllers/deliverycontroller");
 const shoppingCartController = require("./controllers/shopping_cartcontroller");
+const dashboardController = require("./controllers/dashboardControllers/dashboardcontroller");
 
 module.exports = function (app) {
   // Customer Authentication
@@ -29,7 +30,10 @@ module.exports = function (app) {
   app.route("/api/vendor/register").post(authController.vendor_register);
 
   // Products
-  app.route("/api/products").get(productController.getAll);
+  app
+    .route("/api/products")
+    .get(productController.getAll)
+    .post(productController.insert);
   app
     .route("/api/products/:id")
     .get(productController.getById)
@@ -61,38 +65,46 @@ module.exports = function (app) {
     .put(staffController.update);
 
   // Orders
-  app.route("/api/orders").get(ordersController.getAll);
+  app
+    .route("/api/orders")
+    .get(ordersController.getAll)
+    .post(ordersController.insert);
   app
     .route("/api/orders/:id")
     .get(ordersController.getById)
-    .post(ordersController.insert)
     .delete(ordersController.remove)
     .put(ordersController.update);
 
   // Orders_data
-  app.route("/api/orders_data").get(ordersDataController.getAll);
+  app
+    .route("/api/orders_data")
+    .get(ordersDataController.getAll)
+    .post(ordersDataController.insert);
   app
     .route("/api/orders_data/:id")
     .get(ordersDataController.getById)
-    .post(ordersDataController.insert)
     .delete(ordersDataController.remove)
     .put(ordersDataController.update);
 
   // Payments
-  app.route("/api/payments").get(paymentsController.getAll);
+  app
+    .route("/api/payments")
+    .get(paymentsController.getAll)
+    .post(paymentsController.insert);
   app
     .route("/api/payments/:id")
     .get(paymentsController.getById)
-    .post(paymentsController.insert)
     .delete(paymentsController.remove)
     .put(paymentsController.update);
 
   // Feedback
-  app.route("/api/feedback").get(feedbackController.getAll);
+  app
+    .route("/api/feedback")
+    .get(feedbackController.getAll)
+    .post(feedbackController.insert);
   app
     .route("/api/feedback/:id")
     .get(feedbackController.getById)
-    .post(feedbackController.insert)
     .delete(feedbackController.remove)
     .put(feedbackController.update);
 
@@ -105,20 +117,46 @@ module.exports = function (app) {
     .put(vendorController.update);
 
   // Delivery
-  app.route("/api/delivery").get(deliveryController.getAll);
+  app
+    .route("/api/delivery")
+    .get(deliveryController.getAll)
+    .post(deliveryController.insert);
   app
     .route("/api/delivery/:id")
     .get(deliveryController.getById)
-    .post(deliveryController.insert)
     .delete(deliveryController.remove)
     .put(deliveryController.update);
 
   // Shopping Cart
-  app.route("/api/shoppingcart_details").get(shoppingCartController.getAll);
+  app
+    .route("/api/shoppingcart_details")
+    .get(shoppingCartController.getAll)
+    .post(shoppingCartController.insert);
   app
     .route("/api/shoppingcart/:id")
     .get(shoppingCartController.getById)
-    .post(shoppingCartController.insert)
     .delete(shoppingCartController.remove)
     .put(shoppingCartController.update);
+
+  // Dashboard APIs
+  app.route("/api/dashboard/order-list").get(dashboardController.getOrderList); // get orders list
+  app
+    .route("/api/dashboard/available-products")
+    .get(dashboardController.getAvailableProducts); // get all available products
+  app
+    .route("/api/dashboard/unavailable-products")
+    .get(dashboardController.getZeroProductAvailable); // get unavailable products
+  app
+    .route("/api/dashboard/category-list")
+    .get(dashboardController.getCategoryList); // list categories
+  app
+    .route("/api/dashboard/customer-profile/:id")
+    .get(dashboardController.getCustomerProfile); // get customer's information including orders,payaments,etc
+  app
+    .route("/api/dashboard/seller-profile")
+    .get(dashboardController.getSellerInfo); // get seller's personal information
+
+  app
+    .route("/api/dashboard/vendor-profile")
+    .get(dashboardController.getVendorInfo); // get vendor's personal information
 };
