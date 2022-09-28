@@ -32,11 +32,13 @@ CREATE TABLE products(
     description VARCHAR(300),
     image_url VARCHAR(250),
     quantity INT,
-    category_id NOT NULL,
-    seller_id NOT NULL created_at DATETIME,
+    category_id INT NOT NULL,
+    seller_id INT NOT NULL,
+    created_at DATETIME,
     modified_at DATETIME,
     price FLOAT DEFAULT 0,
-    FOREIGN KEY(category_id) REFERENCES category(id) FOREIGN KEY(seller_id) REFERENCES seller(id)
+    FOREIGN KEY(category_id) REFERENCES category(id),
+    FOREIGN KEY(seller_id) REFERENCES seller(id)
 );
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -106,5 +108,5 @@ CREATE TABLE staff(
     contact_no VARCHAR(10) UNIQUE NOT NULL,
     empid INT NOT NULL UNIQUE NOT NULL,
     created_at DATETIME,
-    modified_at DATETIME,
+    modified_at DATETIME
 );
