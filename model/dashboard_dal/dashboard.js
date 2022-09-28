@@ -88,7 +88,7 @@ exports.getCustomerPersonalProfile = function (id) {
 
 exports.getSellerProfile = function () {
   return new Promise((resolve) => {
-    let command = `SELECT name_of_seller,location,email,contact_no FROM seller;`;
+    let command = `SELECT name,location,email,contact_no FROM seller;`;
     sql.query(command, (err, rows, field) => {
       if (err) {
         resolve(err);
@@ -102,7 +102,7 @@ exports.getSellerProfile = function () {
 exports.getSellerProducts = function (id) {
   return new Promise((resolve) => {
     let command = `SELECT 
-    seller.name_of_seller as seller_name,
+    seller.name as seller_name,
     seller.email as seller_email,
     products.title as product_title,
     products.price as product_price,
@@ -123,7 +123,7 @@ exports.getSellerProducts = function (id) {
 exports.getSellerOrders = function (id) {
   return new Promise((resolve) => {
     let command = `SELECT
-    seller.name_of_seller as seller_name,
+    seller.name as seller_name,
     seller.email as seller_email,
     products.title as product_title,
     products.price as product_price,
@@ -148,7 +148,7 @@ exports.getSellerOrders = function (id) {
 
 exports.getVendorProfile = function () {
   return new Promise((resolve) => {
-    let command = `SELECT name_of_vendor,email,contact_no FROM vendor;`;
+    let command = `SELECT name,email,contact_no FROM vendor;`;
     sql.query(command, (err, rows, field) => {
       if (err) {
         resolve(err);

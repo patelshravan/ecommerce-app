@@ -60,7 +60,7 @@ exports.seller_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `INSERT INTO seller(name_of_seller,location,email, contact_no, password, created_at, modified_at) values("${data.name_of_seller}","${data.location}","${data.email}","${data.contact_no}","${data.password}","${timeStamp}","${timeStamp}");`;
+    let command = `INSERT INTO seller(name,location,email, contact_no, password, created_at, modified_at) values("${data.name}","${data.location}","${data.email}","${data.contact_no}","${data.password}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve(err);
@@ -130,7 +130,7 @@ exports.vendor_register = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `INSERT INTO vendor(name_of_vendor,email,password, contact_no,modified_at,created_at) values("${data.name_of_vendor}","${data.email}","${data.password}","${data.contact_no}","${timeStamp}","${timeStamp}");`;
+    let command = `INSERT INTO vendor(name,email,password, contact_no,modified_at,created_at) values("${data.name}","${data.email}","${data.password}","${data.contact_no}","${timeStamp}","${timeStamp}");`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed, Enter Valid Details!");
