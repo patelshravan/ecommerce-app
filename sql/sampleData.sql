@@ -1,4 +1,5 @@
 -- INSERT SAMPLE DATA INTO TABLES
+
 -- INSERT INTO CUSTOMER
 INSERT INTO customers(
         firstname,
@@ -42,6 +43,7 @@ values(
         "2021-09-26"
     );
 SET @customer2Id = LAST_INSERT_ID();
+
 -- INSERT INTO SELLER
 INSERT INTO seller(
         name,
@@ -81,6 +83,7 @@ VALUES(
         "2021-09-26"
     );
 SET @seller2Id = LAST_INSERT_ID();
+
 -- INERT INTO CATEGORY
 INSERT INTO category(name)
 VALUES ("Fashion");
@@ -88,6 +91,7 @@ SET @category1Id = LAST_INSERT_ID();
 INSERT INTO category(name)
 VALUES ("Electronincs");
 SET @category2Id = LAST_INSERT_ID();
+
 -- INSERT INTO PRODUCTS
 INSERT INTO products(
         title,
@@ -135,6 +139,7 @@ VALUES(
         "2021-09-26"
     );
 SET @product2Id = LAST_INSERT_ID();
+
 -- INSERT INTO ORDERS
 INSERT INTO orders(status, customer_id, created_at, modified_at)
 values(
@@ -152,6 +157,7 @@ values(
         "2021-09-26"
     );
 SET @order2Id = LAST_INSERT_ID();
+
 -- INSERT INTO ORDERS_DATA
 INSERT INTO orders_data(
         quantity,
@@ -187,6 +193,7 @@ VALUES(
         "2021-09-26"
     );
 SET @order_data2Id = LAST_INSERT_ID();
+
 -- INSERT INTO PAYMENTS
 INSERT INTO payments(
         amount,
@@ -218,6 +225,7 @@ values(
         "2021-09-26"
     );
 SET @payments2Id = LAST_INSERT_ID();
+
 -- INSERT INTO FEEDBACK
 INSERT INTO feedback(
         image_url,
@@ -251,6 +259,7 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
+
 -- INSERT INTO VENDOR
 INSERT INTO vendor(
         name,
@@ -286,6 +295,7 @@ values(
         "2021-09-26"
     );
 SET @vendor2Id = LAST_INSERT_ID();
+
 -- INSERT INTO DELIVERY
 INSERT INTO delivery(
         order_id,
@@ -321,6 +331,7 @@ values(
         "2021-09-26"
     );
 SET @delivery2Id = LAST_INSERT_ID();
+
 -- INERT INTO STAFF
 INSERT INTO staff(
         firstname,

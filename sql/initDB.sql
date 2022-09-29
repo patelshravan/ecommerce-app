@@ -1,6 +1,9 @@
 -- CREATE DB, CREATE ALL TABLES
+
 CREATE DATABASE ecommerce;
+
 USE ecommerce;
+
 CREATE TABLE customers(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(20) NOT NULL,
@@ -12,6 +15,7 @@ CREATE TABLE customers(
     modified_at DATETIME,
     created_at DATETIME
 );
+
 CREATE TABLE seller(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
@@ -22,10 +26,12 @@ CREATE TABLE seller(
     created_at DATETIME,
     modified_at DATETIME
 );
+
 CREATE TABLE category(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL
 );
+
 CREATE TABLE products(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(20) NOT NULL,
@@ -40,6 +46,7 @@ CREATE TABLE products(
     FOREIGN KEY(category_id) REFERENCES category(id),
     FOREIGN KEY(seller_id) REFERENCES seller(id)
 );
+
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     status VARCHAR(20),
@@ -48,6 +55,7 @@ CREATE TABLE orders(
     modified_at DATETIME,
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
+
 CREATE TABLE orders_data(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     quantity INT,
@@ -59,6 +67,7 @@ CREATE TABLE orders_data(
     FOREIGN KEY(order_id) REFERENCES orders(id),
     FOREIGN KEY(product_id) REFERENCES products(id)
 );
+
 CREATE TABLE payments(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     amount FLOAT DEFAULT 0,
@@ -68,6 +77,7 @@ CREATE TABLE payments(
     modified_at DATETIME,
     FOREIGN KEY(order_id) REFERENCES orders(id)
 );
+
 CREATE TABLE feedback(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     image_url VARCHAR(250) NOT NULL,
@@ -79,6 +89,7 @@ CREATE TABLE feedback(
     FOREIGN KEY(product_id) REFERENCES products(id),
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
+
 CREATE TABLE vendor(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
@@ -88,6 +99,7 @@ CREATE TABLE vendor(
     created_at DATETIME,
     modified_at DATETIME
 );
+
 CREATE TABLE delivery(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
@@ -99,6 +111,7 @@ CREATE TABLE delivery(
     FOREIGN KEY(order_id) REFERENCES orders(id),
     FOREIGN KEY(vendor_id) REFERENCES vendor(id)
 );
+
 CREATE TABLE staff(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(20) NOT NULL,
