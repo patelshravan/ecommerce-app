@@ -45,7 +45,7 @@ exports.placeOrder = function (req) {
 
     let command = `INSERT INTO orders (status, customer_id, created_at, modified_at) VALUES ("placed", ${data.customer_id}, "${timeStamp}", "${timeStamp}");
     SET @order_id = LAST_INSERT_ID();
-    INSERT INTO orders_data (order_id, product_id, price, quantity, created_at, modified_at) VALUES ${dataQuery};
+    INSERT INTO ordersData (order_id, product_id, price, quantity, created_at, modified_at) VALUES ${dataQuery};
     INSERT INTO payments (amount, mode_of_payment, order_id, created_at, modified_at) VALUES (${amount}, "${data.payment_mode}", @order_id, "${timeStamp}", "${timeStamp}");`;
 
     sql.query(command, (err, rows, fields) => {

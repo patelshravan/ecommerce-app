@@ -153,7 +153,7 @@ values(
     );
 SET @order2Id = LAST_INSERT_ID();
 -- INSERT INTO ORDERS_DATA
-INSERT INTO orders_data(
+INSERT INTO ordersData(
         quantity,
         price,
         order_id,
@@ -170,7 +170,7 @@ VALUES(
         "2021-09-26"
     );
 SET @order_data1Id = LAST_INSERT_ID();
-INSERT INTO orders_data(
+INSERT INTO ordersData(
         quantity,
         price,
         order_id,

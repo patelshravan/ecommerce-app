@@ -48,7 +48,7 @@ CREATE TABLE orders(
     modified_at DATETIME,
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
-CREATE TABLE orders_data(
+CREATE TABLE ordersData(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     quantity INT,
     price FLOAT DEFAULT 0,

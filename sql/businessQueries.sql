@@ -21,26 +21,26 @@ SELECT customers.firstname as firstname,
     customers.contact_no as contact_no,
     orders.status as order_status,
     orders.modified_at as order_date,
-    orders_data.quantity as order_quantity,
-    orders_data.price as order_item_price,
+    ordersData.quantity as order_quantity,
+    ordersData.price as order_item_price,
     products.title as product_title,
     products.price as product_current_price,
     payments.mode_of_payment as mode_of_payment,
     customers.id as customer_id,
     orders.id as order_id,
-    orders_data.id as orders_data_id,
+    ordersData.id as ordersData_id,
     products.id as product_id,
     payments.id as payment_id
-FROM orders_data
-    JOIN products ON orders_data.product_id = products.id
-    JOIN orders ON orders_data.order_id = order_id
+FROM ordersData
+    JOIN products ON ordersData.product_id = products.id
+    JOIN orders ON ordersData.order_id = order_id
     JOIN payments ON orders.id = payments.order_id
     JOIN customers ON orders.customer_id = customers.id
 WHERE customers.id = 1
-    AND orders_data.product_id = products.id
+    AND ordersData.product_id = products.id
     AND orders.id = payments.order_id
     AND orders.customer_id = customers.id
-    AND orders.id = orders_data.order_id;
+    AND orders.id = ordersData.order_id;
 -- GET ALL SELLERS
 SELECT *
 FROM sellers;
@@ -76,16 +76,16 @@ SELECT sellers.name as sellers_name,
     products.title as product_title,
     products.price as product_price,
     products.quantity as product_quantity,
-    orders_data.quantity as order_quantity,
-    orders_data.price as order_item_price,
+    ordersData.quantity as order_quantity,
+    ordersData.price as order_item_price,
     orders.status as order_status
-FROM orders_data
-    JOIN orders ON orders_data.order_id = orders.id
-    JOIN products ON products.id = orders_data.product_id
+FROM ordersData
+    JOIN orders ON ordersData.order_id = orders.id
+    JOIN products ON products.id = ordersData.product_id
     JOIN sellers ON sellers.id = products.sellers_id
 WHERE sellers.id = 1
-    AND orders_data.order_id = orders.id
-    AND products.id = orders_data.product_id
+    AND ordersData.order_id = orders.id
+    AND products.id = ordersData.product_id
     AND sellers.id = products.sellers_id;
 -- GET VENDOR PROFILE
 SELECT name,
