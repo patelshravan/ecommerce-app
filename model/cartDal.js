@@ -27,7 +27,7 @@ exports.removeFromCart = function (req, id) {
   return new Promise((resolve) => {
     console.log(req.session);
     req.session.cart = req.session.cart.filter((data) => data.productId != id);
-    resolve(req.session.cart);
+    resolve("Removed from cart successfully");
   });
 };
 

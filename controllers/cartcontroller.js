@@ -14,7 +14,7 @@ exports.addToCart = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
   let data = [];
-  data = await dal.removeFromCart(req.params.id);
+  data = await dal.removeFromCart(req, req.params.id);
   res.send(data);
 };
 
