@@ -9,7 +9,7 @@ const paymentsController = require("./controllers/paymentscontroller");
 const feedbackController = require("./controllers/feedbackcontroller");
 const vendorController = require("./controllers/vendorcontroller");
 const deliveryController = require("./controllers/deliverycontroller");
-const shoppingCartController = require("./controllers/shopping_cartcontroller");
+const cartController = require("./controllers/cartcontroller");
 const dashboardController = require("./controllers/dashboardControllers/dashboardcontroller");
 
 module.exports = function (app) {
@@ -26,8 +26,8 @@ module.exports = function (app) {
   app.route("/api/staff/register").post(authController.staff_register);
 
   // Vendor Authentication
-  app.route("/api/vendor/login").post(authController.vendor_login);
-  app.route("/api/vendor/register").post(authController.vendor_register);
+  app.route("/api/vendor/login").post(authController.vendors_login);
+  app.route("/api/vendor/register").post(authController.vendors_register);
 
   // Products
   app
@@ -127,15 +127,13 @@ module.exports = function (app) {
     .put(deliveryController.update);
 
   // Shopping Cart
+  app.route("/api/cart").get(cartController.getAll);
+  app.route("/api/cart/add").post(cartController.addToCart);
+  app.route("/api/cart/remove/:id").get(cartController.removeFromCart);
   app
-    .route("/api/shoppingcart_details")
-    .get(shoppingCartController.getAll)
-    .post(shoppingCartController.insert);
-  app
-    .route("/api/shoppingcart/:id")
-    .get(shoppingCartController.getById)
-    .delete(shoppingCartController.remove)
-    .put(shoppingCartController.update);
+    .route("/api/checkout")
+
+    .get(cartController.checkout);
 
   // Dashboard APIs
   app.route("/api/dashboard/order-list").get(dashboardController.getOrderList); // get orders list
@@ -157,13 +155,13 @@ module.exports = function (app) {
 
   app
     .route("/api/dashboard/seller-products/:id")
-    .get(dashboardController.getSellerProducts);
+    .get(dashboardController.getSellerProducts); // get all sellers products
 
   app
     .route("/api/dashboard/seller-orders/:id")
-    .get(dashboardController.getSellerOrders);
+    .get(dashboardController.getSellerOrders); // get all sellers sold products
 
   app
     .route("/api/dashboard/vendor-profile")
-    .get(dashboardController.getVendorInfo); // get vendor's personal information
+    .get(dashboardController.getVendorsInfo); // get vendor's personal information
 };

@@ -2,7 +2,7 @@ const sql = require("./db");
 
 exports.getAllSellers = function () {
   return new Promise((resolve) => {
-    let command = "SELECT * FROM seller";
+    let command = "SELECT * FROM sellers";
     sql.query(command, (err, rows, field) => {
       if (err) {
         console.log(err);
@@ -15,7 +15,7 @@ exports.getAllSellers = function () {
 
 exports.getById = function (id) {
   return new Promise((resolve) => {
-    let command = `SELECT * FROM seller WHERE id="${id}"`;
+    let command = `SELECT * FROM sellers WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log("Error:", err);
@@ -27,7 +27,7 @@ exports.getById = function (id) {
 
 exports.remove = function (id) {
   return new Promise((resolve) => {
-    let command = `DELETE FROM seller Where id="${id}"`;
+    let command = `DELETE FROM sellers Where id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);
@@ -41,7 +41,7 @@ exports.remove = function (id) {
 exports.update = function (id, data) {
   return new Promise((resolve) => {
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `UPDATE seller SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
+    let command = `UPDATE sellers SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed to update.");

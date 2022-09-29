@@ -1,9 +1,6 @@
 -- CREATE DB, CREATE ALL TABLES
-
 CREATE DATABASE ecommerce;
-
 USE ecommerce;
-
 CREATE TABLE customers(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(20) NOT NULL,
@@ -15,8 +12,7 @@ CREATE TABLE customers(
     modified_at DATETIME,
     created_at DATETIME
 );
-
-CREATE TABLE seller(
+CREATE TABLE sellers(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
     location VARCHAR(50),
@@ -26,27 +22,24 @@ CREATE TABLE seller(
     created_at DATETIME,
     modified_at DATETIME
 );
-
-CREATE TABLE category(
+CREATE TABLE categories(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL
 );
-
 CREATE TABLE products(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(20) NOT NULL,
     description VARCHAR(300),
     image_url VARCHAR(250),
     quantity INT,
-    category_id INT NOT NULL,
-    seller_id INT NOT NULL,
+    categories_id INT NOT NULL,
+    sellers_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
     price FLOAT DEFAULT 0,
-    FOREIGN KEY(category_id) REFERENCES category(id),
-    FOREIGN KEY(seller_id) REFERENCES seller(id)
+    FOREIGN KEY(categories_id) REFERENCES categories(id),
+    FOREIGN KEY(sellers_id) REFERENCES sellers(id)
 );
-
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     status VARCHAR(20),
@@ -55,7 +48,6 @@ CREATE TABLE orders(
     modified_at DATETIME,
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
-
 CREATE TABLE orders_data(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     quantity INT,
@@ -67,7 +59,6 @@ CREATE TABLE orders_data(
     FOREIGN KEY(order_id) REFERENCES orders(id),
     FOREIGN KEY(product_id) REFERENCES products(id)
 );
-
 CREATE TABLE payments(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     amount FLOAT DEFAULT 0,
@@ -77,7 +68,6 @@ CREATE TABLE payments(
     modified_at DATETIME,
     FOREIGN KEY(order_id) REFERENCES orders(id)
 );
-
 CREATE TABLE feedback(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     image_url VARCHAR(250) NOT NULL,
@@ -89,8 +79,7 @@ CREATE TABLE feedback(
     FOREIGN KEY(product_id) REFERENCES products(id),
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
-
-CREATE TABLE vendor(
+CREATE TABLE vendors(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
@@ -99,20 +88,18 @@ CREATE TABLE vendor(
     created_at DATETIME,
     modified_at DATETIME
 );
-
-CREATE TABLE delivery(
+CREATE TABLE deliveries(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
     status VARCHAR(300),
     location VARCHAR(50),
-    vendor_id INT NOT NULL,
+    vendors_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
     FOREIGN KEY(order_id) REFERENCES orders(id),
-    FOREIGN KEY(vendor_id) REFERENCES vendor(id)
+    FOREIGN KEY(vendors_id) REFERENCES vendors(id)
 );
-
-CREATE TABLE staff(
+CREATE TABLE staffs(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20),

@@ -1,8 +1,8 @@
 const sql = require("./db");
 
-exports.getAllStaff = function () {
+exports.getAllDeliveries = function () {
   return new Promise((resolve) => {
-    let command = "SELECT * FROM staff";
+    let command = "SELECT * FROM deliveries";
     sql.query(command, (err, rows, field) => {
       if (err) {
         console.log(err);
@@ -15,7 +15,7 @@ exports.getAllStaff = function () {
 
 exports.getById = function (id) {
   return new Promise((resolve) => {
-    let command = `SELECT * FROM staff WHERE id="${id}"`;
+    let command = `SELECT * FROM deliveries WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log("Error:", err);
@@ -25,9 +25,24 @@ exports.getById = function (id) {
   });
 };
 
+exports.insert = function (req) {
+  return new Promise((resolve) => {
+    let data = req.body;
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `INSERT INTO deliveries(order_id,status,location,vendors_id,created_at,modified_at) values("${data.order_id}","${data.status}","${data.location}","${data.vendors_id}","${timeStamp}","${timeStamp}");`;
+    sql.query(command, (err, rows, fields) => {
+      if (err) {
+        console.log(err);
+      } else {
+        resolve("Inserted!");
+      }
+    });
+  });
+};
+
 exports.remove = function (id) {
   return new Promise((resolve) => {
-    let command = `DELETE FROM staff Where id="${id}"`;
+    let command = `DELETE FROM deliveries Where id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);
@@ -41,7 +56,7 @@ exports.remove = function (id) {
 exports.update = function (id, data) {
   return new Promise((resolve) => {
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `UPDATE staff SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
+    let command = `UPDATE deliveries SET contact_no="${data.contact_no}",modified_at="${timeStamp}" WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed to update.");

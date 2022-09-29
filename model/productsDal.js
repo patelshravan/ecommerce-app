@@ -1,8 +1,9 @@
+const e = require("express");
 const sql = require("./db");
 
-exports.getAllDelivery = function () {
+exports.getAllProducts = function () {
   return new Promise((resolve) => {
-    let command = "SELECT * FROM delivery";
+    let command = "SELECT * FROM products";
     sql.query(command, (err, rows, field) => {
       if (err) {
         console.log(err);
@@ -13,9 +14,9 @@ exports.getAllDelivery = function () {
   });
 };
 
-exports.getById = function (id) {
+exports.getProductById = function (id) {
   return new Promise((resolve) => {
-    let command = `SELECT * FROM delivery WHERE id="${id}"`;
+    let command = `SELECT * FROM products WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log("Error:", err);
@@ -29,7 +30,9 @@ exports.insert = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `INSERT INTO delivery(order_id,status,location,vendor_id,created_at,modified_at) values("${data.order_id}","${data.status}","${data.location}","${data.vendor_id}","${timeStamp}","${timeStamp}");`;
+    let command = `INSERT INTO products(title,description,image_url,quantity,price,sellers_id,created_at,modified_at) values("${data.title}","${data.description}","${data.image_url}",${data.quantity},${data.price},${data.sellers_id},"${timeStamp}","${timeStamp}");`;
+
+    console.log(command);
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);
@@ -42,7 +45,7 @@ exports.insert = function (req) {
 
 exports.remove = function (id) {
   return new Promise((resolve) => {
-    let command = `DELETE FROM delivery Where id="${id}"`;
+    let command = `DELETE FROM products Where id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         console.log(err);
@@ -56,7 +59,7 @@ exports.remove = function (id) {
 exports.update = function (id, data) {
   return new Promise((resolve) => {
     let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-    let command = `UPDATE delivery SET contact_no="${data.contact_no}",modified_at="${timeStamp}" WHERE id="${id}"`;
+    let command = `UPDATE products SET quantity="${data.quantity}", modified_at="${timeStamp}" WHERE id="${id}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
         resolve("Failed to update.");

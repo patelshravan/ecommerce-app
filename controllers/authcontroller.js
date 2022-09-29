@@ -1,4 +1,4 @@
-const dal = require("../model/auth_dal");
+const dal = require("../model/authDal");
 
 // Customers
 exports.customer_login = async (req, res) => {
@@ -39,15 +39,15 @@ exports.staff_register = async (req, res) => {
   res.send(data);
 };
 
-// Vendor
-exports.vendor_login = async (req, res) => {
+// vendors
+exports.vendors_login = async (req, res) => {
   let data = [];
-  data = await dal.vendor_login(req);
+  data = await dal.vendors_login(req);
   res.send(data);
 };
 
-exports.vendor_register = async (req, res) => {
+exports.vendors_register = async (req, res) => {
   let data = [];
-  data = await dal.vendor_register(req);
+  data = await dal.vendors_register(req);
   res.send(data);
 };

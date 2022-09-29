@@ -1,4 +1,4 @@
-const dal = require("../model/sellers_dal");
+const dal = require("../model/sellersDal");
 
 exports.getAll = async (req, res) => {
   let data = [];

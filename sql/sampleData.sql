@@ -1,5 +1,4 @@
 -- INSERT SAMPLE DATA INTO TABLES
-
 -- INSERT INTO CUSTOMER
 INSERT INTO customers(
         firstname,
@@ -43,9 +42,8 @@ values(
         "2021-09-26"
     );
 SET @customer2Id = LAST_INSERT_ID();
-
 -- INSERT INTO SELLER
-INSERT INTO seller(
+INSERT INTO sellers(
         name,
         location,
         email,
@@ -63,8 +61,8 @@ VALUES(
         "2022-02-10",
         "2021-09-26"
     );
-SET @seller1Id = LAST_INSERT_ID();
-INSERT INTO seller(
+SET @sellers1Id = LAST_INSERT_ID();
+INSERT INTO sellers(
         name,
         location,
         email,
@@ -82,16 +80,14 @@ VALUES(
         "2022-02-10",
         "2021-09-26"
     );
-SET @seller2Id = LAST_INSERT_ID();
-
--- INERT INTO CATEGORY
-INSERT INTO category(name)
+SET @sellers2Id = LAST_INSERT_ID();
+-- INSERT INTO categories
+INSERT INTO categories(name)
 VALUES ("Fashion");
-SET @category1Id = LAST_INSERT_ID();
-INSERT INTO category(name)
+SET @categories1Id = LAST_INSERT_ID();
+INSERT INTO categories(name)
 VALUES ("Electronincs");
-SET @category2Id = LAST_INSERT_ID();
-
+SET @categories2Id = LAST_INSERT_ID();
 -- INSERT INTO PRODUCTS
 INSERT INTO products(
         title,
@@ -99,8 +95,8 @@ INSERT INTO products(
         image_url,
         quantity,
         price,
-        category_id,
-        seller_id,
+        categories_id,
+        sellers_id,
         created_at,
         modified_at
     )
@@ -110,8 +106,8 @@ VALUES(
         "https://m.media-amazon.com/images/I/81QVLzeVckL._SL1500_.jpg",
         1,
         29999,
-        @category1Id,
-        @seller1Id,
+        @categories1Id,
+        @sellers1Id,
         "2022-02-10",
         "2021-09-26"
     );
@@ -122,8 +118,8 @@ INSERT INTO products(
         image_url,
         quantity,
         price,
-        category_id,
-        seller_id,
+        categories_id,
+        sellers_id,
         created_at,
         modified_at
     )
@@ -133,13 +129,12 @@ VALUES(
         "https://m.media-amazon.com/images/I/71qNX0wixBL._UL1500_.jpg",
         2,
         18396,
-        @category2Id,
-        @seller2Id,
+        @categories2Id,
+        @sellers2Id,
         "2022-02-10",
         "2021-09-26"
     );
 SET @product2Id = LAST_INSERT_ID();
-
 -- INSERT INTO ORDERS
 INSERT INTO orders(status, customer_id, created_at, modified_at)
 values(
@@ -157,7 +152,6 @@ values(
         "2021-09-26"
     );
 SET @order2Id = LAST_INSERT_ID();
-
 -- INSERT INTO ORDERS_DATA
 INSERT INTO orders_data(
         quantity,
@@ -193,7 +187,6 @@ VALUES(
         "2021-09-26"
     );
 SET @order_data2Id = LAST_INSERT_ID();
-
 -- INSERT INTO PAYMENTS
 INSERT INTO payments(
         amount,
@@ -225,7 +218,6 @@ values(
         "2021-09-26"
     );
 SET @payments2Id = LAST_INSERT_ID();
-
 -- INSERT INTO FEEDBACK
 INSERT INTO feedback(
         image_url,
@@ -259,9 +251,8 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-
 -- INSERT INTO VENDOR
-INSERT INTO vendor(
+INSERT INTO vendors(
         name,
         email,
         password,
@@ -277,8 +268,8 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-SET @vendor1Id = LAST_INSERT_ID();
-INSERT INTO vendor(
+SET @vendors1Id = LAST_INSERT_ID();
+INSERT INTO vendors(
         name,
         email,
         password,
@@ -294,14 +285,13 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-SET @vendor2Id = LAST_INSERT_ID();
-
+SET @vendors2Id = LAST_INSERT_ID();
 -- INSERT INTO DELIVERY
-INSERT INTO delivery(
+INSERT INTO deliveries(
         order_id,
         status,
         location,
-        vendor_id,
+        vendors_id,
         created_at,
         modified_at
     )
@@ -309,16 +299,16 @@ values(
         @order1Id,
         "delivered",
         "Jaipur",
-        @vendor1Id,
+        @vendors1Id,
         "2022-02-10",
         "2021-09-26"
     );
-SET @delivery1Id = LAST_INSERT_ID();
-INSERT INTO delivery(
+SET @deliveries1Id = LAST_INSERT_ID();
+INSERT INTO deliveries(
         order_id,
         status,
         location,
-        vendor_id,
+        vendors_id,
         created_at,
         modified_at
     )
@@ -326,14 +316,13 @@ values(
         @order2Id,
         "in transit",
         "Sirohi",
-        @vendor2Id,
+        @vendors2Id,
         "2022-02-10",
         "2021-09-26"
     );
-SET @delivery2Id = LAST_INSERT_ID();
-
+SET @deliveries2Id = LAST_INSERT_ID();
 -- INERT INTO STAFF
-INSERT INTO staff(
+INSERT INTO staffs(
         firstname,
         lastname,
         email,
@@ -353,7 +342,7 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-INSERT INTO staff(
+INSERT INTO staffs(
         firstname,
         lastname,
         email,

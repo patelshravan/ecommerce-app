@@ -1,4 +1,4 @@
-const dal = require("../model/shopping_cart_dal");
+const dal = require("../model/cartDal");
 
 exports.getAll = async (req, res) => {
   let data = [];

@@ -6,7 +6,7 @@ customers : all customers' requests are handled like api for customer login, reg
 
 seller : all seller's are able to see their profile, items listed, items sold, total earning, and also able to see their profile,etc
 
-staff : all staff is able to handle all dashboard related APIs like orders ordered by the customer, all available products, unavailable products, all products category lists, customer profile, seller profiile, seller products and seller orders,etc are handled by the staff.
+staff : all staff is able to handle all dashboard related APIs like orders ordered by the customer, all available products, unavailable products, all products categories lists, customer profile, seller profiile, seller products and seller orders,etc are handled by the staff.
 
 and many more APIs have been created for basic CRUD operations for different different tables.
 

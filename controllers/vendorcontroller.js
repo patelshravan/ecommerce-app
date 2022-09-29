@@ -1,8 +1,8 @@
-const dal = require("../model/vendor_dal");
+const dal = require("../model/vendorDal");
 
 exports.getAll = async (req, res) => {
   let data = [];
-  data = await dal.getAllVendor();
+  data = await dal.getAllVendors();
   res.send(data);
 };
 
