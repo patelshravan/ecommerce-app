@@ -4,7 +4,7 @@ const authController = require("./controllers/authcontroller");
 const sellerController = require("./controllers/sellercontroller");
 const staffController = require("./controllers/staffcontroller");
 const ordersController = require("./controllers/orderscontroller");
-const ordersDataController = require("./controllers/orders_datacontroller");
+const ordersDataController = require("./controllers/ordersdatacontroller");
 const paymentsController = require("./controllers/paymentscontroller");
 const feedbackController = require("./controllers/feedbackcontroller");
 const vendorController = require("./controllers/vendorcontroller");
@@ -72,15 +72,15 @@ module.exports = function (app) {
     .delete(ordersController.remove)
     .put(ordersController.update);
 
-  app.route("/api/orders/place-order").post(ordersController.placeOrder);
+  app.route("/api/orders/placeorder").post(ordersController.placeOrder);
 
   // Orders_data
   app
-    .route("/api/orders_data")
+    .route("/api/ordersdata")
     .get(ordersDataController.getAll)
     .post(ordersDataController.insert);
   app
-    .route("/api/orders_data/:id")
+    .route("/api/ordersdata/:id")
     .get(ordersDataController.getById)
     .delete(ordersDataController.remove)
     .put(ordersDataController.update);
@@ -136,32 +136,32 @@ module.exports = function (app) {
     .get(cartController.checkout);
 
   // Dashboard APIs
-  app.route("/api/dashboard/order-list").get(dashboardController.getOrderList); // get orders list
+  app.route("/api/dashboard/orderlist").get(dashboardController.getOrderList); // get orders list
   app
-    .route("/api/dashboard/available-products")
+    .route("/api/dashboard/availableproducts")
     .get(dashboardController.getAvailableProducts); // get all available products
   app
-    .route("/api/dashboard/unavailable-products")
+    .route("/api/dashboard/unavailableproducts")
     .get(dashboardController.getZeroProductAvailable); // get unavailable products
   app
-    .route("/api/dashboard/category-list")
+    .route("/api/dashboard/categorylist")
     .get(dashboardController.getCategoryList); // list categories
   app
-    .route("/api/dashboard/customer-profile/:id")
+    .route("/api/dashboard/customerprofile/:id")
     .get(dashboardController.getCustomerProfile); // get customer's information including orders,payaments,etc
   app
-    .route("/api/dashboard/seller-profile")
+    .route("/api/dashboard/sellerprofile")
     .get(dashboardController.getSellerProfile); // get seller's personal information
 
   app
-    .route("/api/dashboard/seller-products/:id")
+    .route("/api/dashboard/sellerproducts/:id")
     .get(dashboardController.getSellerProducts); // get all sellers products
 
   app
-    .route("/api/dashboard/seller-orders/:id")
+    .route("/api/dashboard/sellerorders/:id")
     .get(dashboardController.getSellerOrders); // get all sellers sold products
 
   app
-    .route("/api/dashboard/vendor-profile")
+    .route("/api/dashboard/vendorprofile")
     .get(dashboardController.getVendorsInfo); // get vendor's personal information
 };
