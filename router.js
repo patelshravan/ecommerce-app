@@ -129,7 +129,7 @@ module.exports = function (app) {
   // Shopping Cart
   app.route("/api/cart").get(cartController.getAll);
   app.route("/api/cart/add").post(cartController.addToCart);
-  app.route("/api/cart/remove/:id").get(cartController.removeFromCart);
+  app.route("/api/cart/remove/:id").delete(cartController.removeFromCart);
   app
     .route("/api/checkout")
 

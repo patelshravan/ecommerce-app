@@ -30,7 +30,7 @@ exports.customer_register = function (req) {
         console.log(err);
         resolve("Failed, Enter Valid Details!");
       } else {
-        resolve("Registered!");
+        resolve("Customer Registered!");
       }
     });
   });
@@ -100,7 +100,7 @@ exports.staff_register = function (req) {
       if (err) {
         resolve("Failed, Enter Valid Details!");
       } else {
-        resolve("Registered!");
+        resolve("Staff Registered!");
       }
     });
   });
@@ -135,7 +135,7 @@ exports.vendor_register = function (req) {
       if (err) {
         resolve("Failed, Enter Valid Details!");
       } else {
-        resolve("Registered!");
+        resolve("Vendor Registered!");
       }
     });
   });
