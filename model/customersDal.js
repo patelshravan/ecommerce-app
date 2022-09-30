@@ -5,9 +5,9 @@ exports.getAllCustomers = function () {
     let command = "SELECT * FROM customers";
     sql.query(command, (err, rows, field) => {
       if (err) {
-        console.log(err);
+        resolve({ error: "Some error occurred!" });
       } else {
-        resolve(rows);
+        resolve({ customers: rows });
       }
     });
   });

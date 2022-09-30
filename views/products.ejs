@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <table class="table table-inverse">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Image Url</th>
+            <th>Quantity</th>
+            <th>Category Id</th>
+            <th>Seller Id</th>
+            <th>Created At</th>
+            <th>Modified At</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% for(var i=0; i < products.length; i++) { %>
+          <tr>
+            <td><%= products[i].id %></td>
+            <td><%= products[i].title %></td>
+            <td><%= products[i].description %></td>
+            <td><%= products[i].image_url %></td>
+            <td><%= products[i].quantity %></td>
+            <td><%= products[i].category_id %></td>
+            <td><%= products[i].seller_id %></td>
+            <td><%= products[i].created_at %></td>
+            <td><%= products[i].modified_at %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

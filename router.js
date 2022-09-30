@@ -14,7 +14,11 @@ const dashboardController = require("./controllers/dashboardControllers/dashboar
 
 module.exports = function (app) {
   // Customer Authentication
-  app.route("/api/customer/login").post(authController.customer_login);
+  app
+    .route("/api/customer/login")
+    .post(authController.customer_login)
+    .get(authController.loginPage);
+
   app.route("/api/customer/register").post(authController.customer_register);
 
   // Seller Authentication
@@ -33,6 +37,7 @@ module.exports = function (app) {
   app
     .route("/api/products")
     .get(productController.getAll)
+    .get(productController.productPage)
     .post(productController.insert);
   app
     .route("/api/products/:id")
@@ -41,7 +46,10 @@ module.exports = function (app) {
     .put(productController.update);
 
   // Customers
-  app.route("/api/customers").get(customerController.getAll);
+  app
+    .route("/api/customers")
+    .get(customerController.getAll)
+    .get(customerController.customerPage);
   app
     .route("/api/customers/:id")
     .get(customerController.getById)

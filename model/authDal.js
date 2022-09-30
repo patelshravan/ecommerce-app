@@ -1,9 +1,12 @@
 const sql = require("./db");
+// const jwt = require("jsonwebtoken");
+// const jwtSecretKey = "ecom_secret";
 
 // Customer
 exports.customer_login = function (req) {
   return new Promise((resolve) => {
     let data = req.body;
+    console.log("data", data);
     let command = `SELECT email FROM customers WHERE email="${data.email}" AND password="${data.password}"`;
     sql.query(command, (err, rows, fields) => {
       if (err) {
@@ -12,9 +15,13 @@ exports.customer_login = function (req) {
       let allUsersStr = JSON.stringify(rows);
       var allUsers = JSON.parse(allUsersStr);
       if (allUsers.length > 0) {
-        resolve(`Welcome ${data.email}`);
+        console.log("Login Success");
+        // resolve(`Welcome ${data.email}`);
+        resolve(data);
       } else {
-        resolve("Invalid User!");
+        console.log("failed");
+        // resolve("Invalid User!");
+        resolve({ error: "Invalid User" });
       }
     });
   });

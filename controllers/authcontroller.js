@@ -3,8 +3,17 @@ const dal = require("../model/authDal");
 // Customers
 exports.customer_login = async (req, res) => {
   let data = [];
+  console.log("inside cust login function");
   data = await dal.customer_login(req);
-  res.send(data);
+  if (data.error) {
+    res.render("../views/errorpage", data);
+  } else {
+    res.render("../views/home", data);
+  }
+};
+
+exports.loginPage = async (req, res) => {
+  res.render("../views/customerlogin");
 };
 
 exports.customer_register = async (req, res) => {

@@ -1,9 +1,18 @@
 const dal = require("../model/customersDal");
 
 exports.getAll = async (req, res) => {
-  let data = [];
+  // let data = [];
+  let data = req.body;
   data = await dal.getAllCustomers();
-  res.send(data);
+  if (data.error) {
+    res.render("../views/errorpage", data);
+  } else {
+    res.render("../views/customerprofile", data);
+  }
+};
+
+exports.customerPage = async (req, res) => {
+  res.render("../views/customerprofile");
 };
 
 exports.getById = async (req, res) => {
