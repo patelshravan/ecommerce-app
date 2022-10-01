@@ -17,7 +17,7 @@ exports.customerPage = async (req, res) => {
 
 exports.getById = async (req, res) => {
   let data = [];
-  data = await dal.getById(req.params.id);
+  data = await dal.getById(req);
   res.send(data);
 };
 

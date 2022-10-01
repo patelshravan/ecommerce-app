@@ -1,6 +1,6 @@
 const sql = require("./db");
-// const jwt = require("jsonwebtoken");
-// const jwtSecretKey = "ecom_secret";
+const jwt = require("jsonwebtoken");
+const secret = require("../config");
 
 // Customer
 exports.customer_login = function (req) {
@@ -9,18 +9,24 @@ exports.customer_login = function (req) {
     console.log("data", data);
     let command = `SELECT email FROM customers WHERE email="${data.email}" AND password="${data.password}"`;
     sql.query(command, (err, rows, fields) => {
+      let userData = {
+        time: Date(),
+        email: data.email,
+      };
+
       if (err) {
         console.log("Error:", err);
       }
       let allUsersStr = JSON.stringify(rows);
       var allUsers = JSON.parse(allUsersStr);
       if (allUsers.length > 0) {
-        console.log("Login Success");
-        // resolve(`Welcome ${data.email}`);
-        resolve(data);
+        let token = jwt.sign(userData, secret.jwtSecretKey, {
+          expiresIn: 72 * 3600,
+        });
+        userData.token = token;
+        console.log("Login Successful:", userData);
+        resolve(userData);
       } else {
-        console.log("failed");
-        // resolve("Invalid User!");
         resolve({ error: "Invalid User" });
       }
     });
