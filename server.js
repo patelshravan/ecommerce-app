@@ -1,7 +1,6 @@
 const express = require("express");
 const expressSession = require("express-session");
 const routes = require("./router");
-const ejs = require("ejs");
 
 const oneDay = 1000 * 60 * 60 * 24;
 const app = express();

@@ -52,7 +52,7 @@ module.exports = function (app) {
     .get(customerController.customerPage);
   app
     .route("/api/customers/:id")
-    .get(customerController.getById)
+    .get(authController.verifyjwttoken, customerController.getById)
     .delete(customerController.remove)
     .put(customerController.update);
 
@@ -142,6 +142,10 @@ module.exports = function (app) {
     .route("/api/checkout")
 
     .get(cartController.checkout);
+
+  // JWT
+
+  app.route("/api/test/jwt").get(authController.verifyjwttoken);
 
   // Dashboard APIs
   app.route("/api/dashboard/orderlist").get(dashboardController.getOrderList); // get orders list
