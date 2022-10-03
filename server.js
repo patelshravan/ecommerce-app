@@ -1,7 +1,10 @@
 const express = require("express");
 const expressSession = require("express-session");
 const routes = require("./router");
+<<<<<<< HEAD
 const cors = require("cors");
+=======
+>>>>>>> 55decf3b038ae6ae8c74c5ad00acf00dd8e39546
 
 const oneDay = 1000 * 60 * 60 * 24;
 const app = express();
