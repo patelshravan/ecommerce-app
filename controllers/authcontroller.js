@@ -1,19 +1,12 @@
 const dal = require("../model/authDal");
-
+const config = require("../config");
+const jwt = require("jsonwebtoken");
 // Customers
 exports.customer_login = async (req, res) => {
   let data = [];
   console.log("inside cust login function");
   data = await dal.customer_login(req);
-  if (data.error) {
-    res.render("../views/errorpage", data);
-  } else {
-    res.render("../views/home", data);
-  }
-};
-
-exports.loginPage = async (req, res) => {
-  res.render("../views/customerlogin");
+  res.send(data);
 };
 
 exports.customer_register = async (req, res) => {
@@ -59,4 +52,18 @@ exports.vendors_register = async (req, res) => {
   let data = [];
   data = await dal.vendors_register(req);
   res.send(data);
+};
+
+// JWT VERIFY FUNCTION
+exports.verifyjwttoken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(401).json("Unauthorize user");
+  try {
+    const decoded = jwt.verify(token, config.jwtSecretKey);
+    req.user = decoded;
+    console.log("Validation Successful");
+    next();
+  } catch (e) {
+    res.status(400).json("Token not valid");
+  }
 };

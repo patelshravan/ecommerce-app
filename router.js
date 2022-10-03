@@ -14,10 +14,7 @@ const dashboardController = require("./controllers/dashboardControllers/dashboar
 
 module.exports = function (app) {
   // Customer Authentication
-  app
-    .route("/api/customer/login")
-    .post(authController.customer_login)
-    .get(authController.loginPage);
+  app.route("/api/customer/login").post(authController.customer_login);
 
   app.route("/api/customer/register").post(authController.customer_register);
 
@@ -37,7 +34,6 @@ module.exports = function (app) {
   app
     .route("/api/products")
     .get(productController.getAll)
-    .get(productController.productPage)
     .post(productController.insert);
   app
     .route("/api/products/:id")
@@ -46,15 +42,15 @@ module.exports = function (app) {
     .put(productController.update);
 
   // Customers
-  app
-    .route("/api/customers")
-    .get(customerController.getAll)
-    .get(customerController.customerPage);
+  app.route("/api/customers").get(customerController.getAll);
   app
     .route("/api/customers/:id")
-    .get(customerController.getById)
+    .get(authController.verifyjwttoken, customerController.getById)
     .delete(customerController.remove)
     .put(customerController.update);
+  app
+    .route("/api/updatepassword/customer")
+    .put(authController.verifyjwttoken, customerController.updatePassword);
 
   // Seller
   app.route("/api/seller").get(sellerController.getAll);
@@ -142,6 +138,10 @@ module.exports = function (app) {
     .route("/api/checkout")
 
     .get(cartController.checkout);
+
+  // JWT
+
+  app.route("/api/test/jwt").get(authController.verifyjwttoken);
 
   // Dashboard APIs
   app.route("/api/dashboard/orderlist").get(dashboardController.getOrderList); // get orders list

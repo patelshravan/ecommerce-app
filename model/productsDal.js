@@ -6,9 +6,9 @@ exports.getAllProducts = function () {
     let command = "SELECT * FROM products";
     sql.query(command, (err, rows, field) => {
       if (err) {
-        resolve({ error: "Some error occurred!" });
+        resolve("Some error occurred!");
       } else {
-        resolve({ products: rows });
+        resolve(rows);
       }
     });
   });

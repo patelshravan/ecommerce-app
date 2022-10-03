@@ -1,18 +1,9 @@
 const dal = require("../model/productsDal");
 
 exports.getAll = async (req, res) => {
-  // let data = [];
-  let data = req.body;
+  let data = [];
   data = await dal.getAllProducts();
-  if (data.error) {
-    res.render("../views/errorpage", data);
-  } else {
-    res.render("../views/products", data);
-  }
-};
-
-exports.productPage = async (req, res) => {
-  res.render("../views/products");
+  res.send(data);
 };
 
 exports.getById = async (req, res) => {

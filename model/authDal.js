@@ -27,7 +27,7 @@ exports.customer_login = function (req) {
         console.log("Login Successful:", userData);
         resolve(userData);
       } else {
-        resolve({ error: "Invalid User" });
+        resolve("Invalid User");
       }
     });
   });

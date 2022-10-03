@@ -5,9 +5,9 @@ exports.getAllCustomers = function (req) {
     let command = "SELECT * FROM customers";
     sql.query(command, (err, rows, field) => {
       if (err) {
-        resolve({ error: "Some error occurred!" });
+        resolve("Some error occurred!");
       } else {
-        resolve({ customers: rows });
+        resolve(rows);
       }
     });
   });
@@ -53,6 +53,24 @@ exports.update = function (id, data) {
         resolve(err);
       } else {
         resolve("Updated!");
+      }
+    });
+  });
+};
+
+exports.updatePassword = function (req) {
+  let user = req.user;
+  console.log("USER", user);
+  console.log("REQ_BODY", req.body);
+  let password = req.body.password;
+  return new Promise((resolve) => {
+    let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
+    let command = `UPDATE customers SET password="${password}", modified_at="${timeStamp}" WHERE email="${user.email}"`;
+    sql.query(command, (err, rows, fields) => {
+      if (err) {
+        resolve(err);
+      } else {
+        resolve("Password Updated!");
       }
     });
   });
