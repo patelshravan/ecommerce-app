@@ -1,30 +1,58 @@
 -- CREATE DB, CREATE ALL TABLES
 CREATE DATABASE ecommerce;
 USE ecommerce;
+CREATE TABLE users(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    email varchar(50) NOT NULL,
+    password varchar(6) NOT NULL,
+    user_type ENUM ('customer', 'seller', 'staff', 'vendor')
+);
 CREATE TABLE customers(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id int,
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20),
-    email VARCHAR(50) UNIQUE NOT NULL,
-    contact_no VARCHAR(10) UNIQUE,
-    password VARCHAR(6) NOT NULL,
+    contact_no VARCHAR(11) UNIQUE,
     location VARCHAR(50),
+    created_at DATETIME,
     modified_at DATETIME,
-    created_at DATETIME
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE sellers(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id int,
     name VARCHAR(20) NOT NULL,
-    location VARCHAR(50),
-    email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(6) NOT NULL,
     contact_no VARCHAR(10) UNIQUE,
+    location VARCHAR(50),
     created_at DATETIME,
-    modified_at DATETIME
+    modified_at DATETIME,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE staffs(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id int,
+    firstname VARCHAR(20) NOT NULL,
+    lastname VARCHAR(20),
+    contact_no VARCHAR(10) UNIQUE NOT NULL,
+    empid INT NOT NULL UNIQUE NOT NULL,
+    created_at DATETIME,
+    modified_at DATETIME,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE vendors(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id int,
+    name VARCHAR(20) NOT NULL,
+    contact_no VARCHAR(12) UNIQUE NOT NULL,
+    created_at DATETIME,
+    modified_at DATETIME,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE categories(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL
+    name VARCHAR(20) NOT NULL,
+    created_at DATETIME,
+    modified_at DATETIME
 );
 CREATE TABLE products(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -32,13 +60,13 @@ CREATE TABLE products(
     description VARCHAR(300),
     image_url VARCHAR(250),
     quantity INT,
-    categories_id INT NOT NULL,
-    sellers_id INT NOT NULL,
+    price FLOAT DEFAULT 0,
+    category_id INT NOT NULL,
+    seller_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
-    price FLOAT DEFAULT 0,
-    FOREIGN KEY(categories_id) REFERENCES categories(id),
-    FOREIGN KEY(sellers_id) REFERENCES sellers(id)
+    FOREIGN KEY(category_id) REFERENCES categories(id),
+    FOREIGN KEY(seller_id) REFERENCES sellers(id)
 );
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -61,14 +89,17 @@ CREATE TABLE ordersData(
 );
 CREATE TABLE payments(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    amount FLOAT DEFAULT 0,
+    -- amount FLOAT DEFAULT 0,
+    total_amount float DEFAULT 0,
+    discount_percentage float DEFAULT 0,
+    payable_amount float DEFAULT 0,
     order_id INT NOT NULL,
-    mode_of_payment VARCHAR(20) NOT NULL,
+    mode_of_payment ENUM ('netbanking', 'UPI', 'debitcard', 'creditcard'),
     created_at DATETIME,
     modified_at DATETIME,
     FOREIGN KEY(order_id) REFERENCES orders(id)
 );
-CREATE TABLE feedback(
+CREATE TABLE feedbacks(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     image_url VARCHAR(250) NOT NULL,
     product_id INT NOT NULL,
@@ -79,34 +110,31 @@ CREATE TABLE feedback(
     FOREIGN KEY(product_id) REFERENCES products(id),
     FOREIGN KEY(customer_id) REFERENCES customers(id)
 );
-CREATE TABLE vendors(
-    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(6) NOT NULL,
-    contact_no VARCHAR(12) UNIQUE NOT NULL,
-    created_at DATETIME,
-    modified_at DATETIME
-);
 CREATE TABLE deliveries(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
-    status VARCHAR(300),
+    vendor_id INT NOT NULL,
     location VARCHAR(50),
-    vendors_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
     FOREIGN KEY(order_id) REFERENCES orders(id),
-    FOREIGN KEY(vendors_id) REFERENCES vendors(id)
+    FOREIGN KEY(vendor_id) REFERENCES vendors(id)
 );
-CREATE TABLE staffs(
+CREATE TABLE accounts (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    firstname VARCHAR(20) NOT NULL,
-    lastname VARCHAR(20),
-    email VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(6) NOT NULL,
-    contact_no VARCHAR(10) UNIQUE NOT NULL,
-    empid INT NOT NULL UNIQUE NOT NULL,
+    account_number VARCHAR(50),
+    user_id INT,
+    balance FLOAT NOT NULL,
     created_at DATETIME,
-    modified_at DATETIME
+    modified_at DATETIME,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+);
+CREATE TABLE transactions (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    from_account INT,
+    to_account INT,
+    amount FLOAT DEFAULT 0,
+    created_at DATETIME,
+    FOREIGN KEY(from_account) REFERENCES accounts(id),
+    FOREIGN KEY(to_account) REFERENCES accounts(id)
 );
