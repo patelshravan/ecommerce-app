@@ -121,20 +121,19 @@ CREATE TABLE deliveries(
     FOREIGN KEY(vendor_id) REFERENCES vendors(id)
 );
 CREATE TABLE accounts (
-    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    account_number VARCHAR(50),
+    account_number VARCHAR(50) PRIMARY KEY,
     user_id INT,
-    balance FLOAT NOT NULL,
+    balance float NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 CREATE TABLE transactions (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    from_account INT,
-    to_account INT,
+    from_account VARCHAR(50),
+    to_account VARCHAR(50),
     amount FLOAT DEFAULT 0,
     created_at DATETIME,
-    FOREIGN KEY(from_account) REFERENCES accounts(id),
-    FOREIGN KEY(to_account) REFERENCES accounts(id)
+    FOREIGN KEY(from_account) REFERENCES accounts(account_number),
+    FOREIGN KEY(to_account) REFERENCES accounts(account_number)
 );
