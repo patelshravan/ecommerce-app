@@ -88,7 +88,6 @@ values(
         "vendor"
     );
 SET @user8Id = LAST_INSERT_ID();
-
 -- INSERT INTO ACCOUNTS
 INSERT INTO accounts(
         account_number,
@@ -104,7 +103,7 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-SET @accounts1Id = LAST_INSERT_ID(); 
+SET @accounts1Id = LAST_INSERT_ID();
 INSERT INTO accounts(
         account_number,
         user_id,
@@ -150,7 +149,6 @@ values(
         "2021-09-26"
     );
 SET @accounts4Id = LAST_INSERT_ID();
-
 -- INSERT INTO CUSTOMERs
 INSERT INTO customers(
         user_id,
@@ -190,8 +188,6 @@ values(
         "2021-09-26"
     );
 SET @customer2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO SELLERS
 INSERT INTO sellers(
         user_id,
@@ -227,7 +223,6 @@ VALUES(
         "2021-09-26"
     );
 SET @sellers2Id = LAST_INSERT_ID();
-
 -- INERT INTO STAFFS
 INSERT INTO staffs(
         user_id,
@@ -265,7 +260,6 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-
 -- INSERT INTO VENDORS
 INSERT INTO vendors(
         user_id,
@@ -297,8 +291,6 @@ values(
         "2021-09-26"
     );
 SET @vendors2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO CATEGORIES
 INSERT INTO categories(name, created_at, modified_at)
 VALUES ("Fashion", "2022-02-10", "2021-09-26");
@@ -306,8 +298,6 @@ SET @categories1Id = LAST_INSERT_ID();
 INSERT INTO categories(name, created_at, modified_at)
 VALUES ("Electronincs", "2022-02-10", "2021-09-26");
 SET @categories2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO PRODUCTS
 INSERT INTO products(
         title,
@@ -355,8 +345,6 @@ VALUES(
         "2021-09-26"
     );
 SET @product2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO ORDERS
 INSERT INTO orders(status, customer_id, created_at, modified_at)
 values(
@@ -374,8 +362,6 @@ values(
         "2021-09-26"
     );
 SET @order2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO ORDERS_DATA
 INSERT INTO ordersData(
         quantity,
@@ -411,8 +397,6 @@ VALUES(
         "2021-09-26"
     );
 SET @order_data2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO PAYMENTS
 INSERT INTO payments(
         total_amount,
@@ -452,8 +436,6 @@ values(
         "2021-09-26"
     );
 SET @payments2Id = LAST_INSERT_ID();
-
-
 -- INSERT INTO FEEDBACKS
 INSERT INTO feedbacks(
         image_url,
@@ -487,7 +469,6 @@ values(
         "2022-02-10",
         "2021-09-26"
     );
-
 -- INSERT INTO DELIVERIES
 INSERT INTO deliveries(
         order_id,
@@ -519,22 +500,3 @@ values(
         "2021-09-26"
     );
 SET @deliveries2Id = LAST_INSERT_ID();
-
--- FundsTransfer Query
-
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `FundsTransfer`(amount float, account_to VARCHAR(50), account_from VARCHAR(50), timestamp DATETIME)
-BEGIN
-	DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-		ROLLBACK;
-	END;
-	START TRANSACTION;
-		INSERT INTO transactions (to_account, from_account, amount, created_at) VALUES (account_to, account_from, amount, timestamp); 
-		UPDATE accounts SET balance=balance-amount WHERE account_number=account_from;
-		UPDATE accounts SET balance=balance+amount WHERE account_number=account_to;
-	COMMIT;
-END;
-
-
-CALL FundsTransfer(200, "456151126165", "45615156165" ,"2021-09-26");
