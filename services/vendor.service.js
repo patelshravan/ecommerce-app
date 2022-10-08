@@ -1,10 +1,10 @@
-import Customer from "../model/customer.model.js";
+import Vendor from "../model/vendor.model.js";
 import sql from "../model/db.js";
 
-export default class CustomerService {
+export default class VendorService {
   //constructor Dependency Injection
   constructor() {
-    this.model = new Customer();
+    this.model = new Vendor();
   }
 
   getAll = () => {
@@ -12,7 +12,7 @@ export default class CustomerService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch customers." });
+          resolve({ error: "Unable to fetch vendors." });
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class CustomerService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch customers by id." });
+          resolve({ error: "Unable to fetch vendor by id." });
         }
         resolve({ data: rows });
       });
@@ -39,7 +39,7 @@ export default class CustomerService {
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log(err);
-          resolve({ error: "Unable to update a customer." });
+          resolve({ error: "Unable to update a vendor." });
         } else {
           resolve({ data: rows });
         }

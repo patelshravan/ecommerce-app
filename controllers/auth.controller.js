@@ -39,7 +39,7 @@ export default class AuthController {
     res.send(result.data);
   };
 
-  vupdateSellerPassword = async (req, res) => {
+  updateSellerPassword = async (req, res) => {
     console.log("Update Seller Password");
     let result = await this.repoManager.updateSellerPassword(req);
     res.send(result.data);

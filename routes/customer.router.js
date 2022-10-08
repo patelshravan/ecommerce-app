@@ -14,5 +14,6 @@ export default function (app) {
 
   // Customer Auth
   app.post("/api/customer/login", authcontroller.customerLogin);
+  app.post("/api/customer/login", authcontroller.customerRegister);
   app.put("/api/product/:id", authcontroller.updateCustomerPassword);
 }

@@ -2,9 +2,9 @@ export default class Auth {
   //Parameterized constructor
   constructor(id, email, password, user_type) {
     this.id = id;
-    this.title = email;
-    this.description = password;
-    this.image_url = user_type;
+    this.email = email;
+    this.password = password;
+    this.user_type = user_type;
 
     this.table_name = "users";
   }

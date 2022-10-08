@@ -1,31 +1,34 @@
-export default class Seller {
+export default class Staff {
   //Parameterized constructor
   constructor(
     id,
     user_id,
-    name,
+    firstname,
+    lastname,
     contact_no,
-    location,
+    empid,
     created_at,
     modified_at
   ) {
     this.id = id;
     this.user_id = user_id;
-    this.name = name;
+    this.firstname = firstname;
+    this.lastname = lastname;
     this.contact_no = contact_no;
-    this.location = location;
+    this.empid = empid;
     this.created_at = created_at;
     this.modified_at = modified_at;
 
-    this.table_name = "sellers";
+    this.table_name = "staffs";
   }
 
   display() {
     console.log(`Id= ${this.id}`);
     console.log(`User Id= ${this.user_id}`);
-    console.log(`Name= ${this.name}`);
+    console.log(`First Name= ${this.firstname}`);
+    console.log(`Last Name= ${this.lastname}`);
     console.log(`Mobile= ${this.contact_no}`);
-    console.log(`Location= ${this.location}`);
+    console.log(`Emp Id= ${this.empid}`);
     console.log(`Created At= ${this.created_at}`);
   }
 }
