@@ -1,16 +1,16 @@
-const customerController = require("./controllers/customercontroller");
-const productController = require("./controllers/productcontroller");
-const authController = require("./controllers/authcontroller");
-const sellerController = require("./controllers/sellercontroller");
-const staffController = require("./controllers/staffcontroller");
-const ordersController = require("./controllers/orderscontroller");
-const ordersDataController = require("./controllers/ordersdatacontroller");
-const paymentsController = require("./controllers/paymentscontroller");
-const feedbackController = require("./controllers/feedbackcontroller");
-const vendorController = require("./controllers/vendorcontroller");
-const deliveryController = require("./controllers/deliverycontroller");
-const cartController = require("./controllers/cartcontroller");
-const dashboardController = require("./controllers/dashboardControllers/dashboardcontroller");
+const customerController = require("../controllers/customercontroller");
+const productController = require("../controllers/productcontroller");
+const authController = require("../controllers/authcontroller");
+const sellerController = require("../controllers/sellercontroller");
+const staffController = require("../controllers/staffcontroller");
+const ordersController = require("../controllers/orderscontroller");
+const ordersDataController = require("../controllers/ordersdatacontroller");
+const paymentsController = require("../controllers/paymentscontroller");
+const feedbackController = require("../controllers/feedbackcontroller");
+const vendorController = require("../controllers/vendorcontroller");
+const deliveryController = require("../controllers/deliverycontroller");
+const cartController = require("../controllers/cartcontroller");
+const dashboardController = require("../controllers/dashboardControllers/dashboardcontroller");
 
 module.exports = function (app) {
   // Customer Authentication
