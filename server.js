@@ -2,6 +2,7 @@ import express from "express";
 import expressSession from "express-session";
 import cors from "cors";
 import productRoutes from "./routes/product.router.js";
+import customerRoutes from "./routes/customer.router.js";
 // import routes from "./routes/router.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
@@ -26,6 +27,7 @@ app.use(sessionMiddlware);
 
 //
 productRoutes(app);
+customerRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`App Server is Listening on Port ${PORT}`);

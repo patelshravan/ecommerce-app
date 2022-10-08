@@ -1,10 +1,10 @@
-import Product from "../model/product.model.js";
+import Customer from "../model/customer.model.js";
 import sql from "../model/db.js";
 
-export default class ProductService {
+export default class CustomerService {
   //constructor Dependency Injection
   constructor() {
-    this.model = new Product();
+    this.model = new Customer();
   }
 
   getAll = () => {
@@ -12,7 +12,7 @@ export default class ProductService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch products." });
+          resolve({ error: "Unable to fetch customers." });
         } else {
           resolve({ data: rows });
         }
@@ -25,22 +25,7 @@ export default class ProductService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch products by id." });
-        }
-        resolve({ data: rows });
-      });
-    });
-  };
-
-  post = (req) => {
-    return new Promise((resolve) => {
-      let data = req.body;
-      let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-      let command = `INSERT INTO ${this.model.table_name}(title,description,image_url,quantity,price,category_id,seller_id,created_at,modified_at) values("${data.title}","${data.description}","${data.image_url}",${data.quantity},${data.price},${data.category_id},${data.seller_id},"${timeStamp}","${timeStamp}");`;
-      sql.query(command, (err, rows, fields) => {
-        if (err) {
-          console.log("Adding Product Err:", err);
-          resolve({ error: "Unable to insert a product." });
+          resolve({ error: "Unable to fetch customers by id." });
         }
         resolve({ data: rows });
       });
@@ -53,7 +38,7 @@ export default class ProductService {
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log(err);
-          resolve({ error: "Unable to delete a product." });
+          resolve({ error: "Unable to delete a customer." });
         } else {
           resolve({ data: rows });
         }
@@ -64,10 +49,10 @@ export default class ProductService {
   update = (id, data) => {
     return new Promise((resolve) => {
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-      let command = `UPDATE ${this.model.table_name} SET quantity="${data.quantity}", modified_at="${timeStamp}" WHERE id="${id}"`;
+      let command = `UPDATE ${this.model.table_name} SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          onsole.log(err);
+          console.log(err);
           resolve({ error: "Unable to update a product." });
         } else {
           resolve({ data: rows });

@@ -1,4 +1,3 @@
-const e = require("express");
 const sql = require("./db");
 
 exports.getAllProducts = function () {

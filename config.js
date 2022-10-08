@@ -1,1 +1,2 @@
-exports.jwtSecretKey = "ecom_secret";
+const jwtSecretKey = "ecom_secret";
+export default jwtSecretKey;
