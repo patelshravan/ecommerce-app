@@ -1,7 +1,8 @@
-const express = require("express");
-const expressSession = require("express-session");
-const cors = require("cors");
-const routes = require("./routes/router");
+import express from "express";
+import expressSession from "express-session";
+import cors from "cors";
+import productRoutes from "./routes/product.router.js";
+// import routes from "./routes/router.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
 const app = express();
@@ -20,9 +21,12 @@ var sessionMiddlware = expressSession({
   cookie: { maxAge: oneDay },
   resave: false,
 });
+
 app.use(sessionMiddlware);
 
-routes(app);
+//
+productRoutes(app);
+
 app.listen(PORT, () => {
   console.log(`App Server is Listening on Port ${PORT}`);
 });
