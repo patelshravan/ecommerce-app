@@ -1,11 +1,13 @@
 import VendorController from "../controllers/vendor.controller.js";
 import AuthController from "../controllers/auth.controller.js";
-import CustomerService from "../services/customer.service.js";
+import VendorServices from "../services/vendor.service.js";
+import AuthService from "../services/auth.service.js";
 
 export default function (app) {
-  let mgr = new CustomerService();
-  let controller = new VendorController(mgr);
-  let authcontroller = new AuthController(mgr);
+  let vendormgr = new VendorServices();
+  let authmgr = new AuthService();
+  let controller = new VendorController(vendormgr);
+  let authcontroller = new AuthController(authmgr);
 
   //Map controller callback functions for rest API routes
   app.get("/api/vendor", controller.get);

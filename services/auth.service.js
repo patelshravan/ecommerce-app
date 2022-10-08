@@ -18,7 +18,7 @@ export default class AuthService {
     this.staffModel = new Staff();
   }
 
-  customerLogin = () => {
+  customerLogin = (req) => {
     return new Promise((resolve) => {
       let data = req.body;
       console.log("data", data);
@@ -41,21 +41,21 @@ export default class AuthService {
           });
           userData.token = token;
           console.log("Login Successful:", userData);
-          resolve(userData);
+          resolve({ message: "Login Success" });
         } else {
-          resolve("Invalid User");
+          resolve({ error: "Invalid User" });
         }
       });
     });
   };
 
-  customeRegister = (req, res) => {
+  customerRegister = (req, res) => {
     return new Promise((resolve) => {
       let data = req.body;
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
       let command = `INSERT INTO ${this.userModel.table_name}(email,password,user_type) VALUES ("${data.email}","${data.password}","customer");
       SET @userId = LAST_INSERT_ID();
-      INSERT INTO ${this.customerModel.table_name}(user_id,firstname,lastname,email,contact_no,password, location, created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.email}","${data.contact_no}","${data.password}","${data.location}","${timeStamp}","${timeStamp}");`;
+      INSERT INTO ${this.customerModel.table_name}(user_id,firstname,lastname,contact_no, location, created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.contact_no}","${data.location}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log(err);
@@ -85,7 +85,7 @@ export default class AuthService {
   };
   // Seller
 
-  sellerLogin = () => {
+  sellerLogin = (req) => {
     return new Promise((resolve) => {
       let data = req.body;
       console.log("data", data);
@@ -152,7 +152,7 @@ export default class AuthService {
   };
 
   // Vendor
-  vendorLogin = () => {
+  vendorLogin = (req) => {
     return new Promise((resolve) => {
       let data = req.body;
       console.log("data", data);
@@ -219,11 +219,11 @@ export default class AuthService {
   };
 
   // Staff
-  StaffLogin = () => {
+  staffLogin = (req) => {
     return new Promise((resolve) => {
       let data = req.body;
       console.log("data", data);
-      let command = `SELECT email FROM ${this.userModel.table_name} WHERE email="${data.email}" AND password="${data.password}" AND user_type="vendor"`;
+      let command = `SELECT email FROM ${this.userModel.table_name} WHERE email="${data.email}" AND password="${data.password}" AND user_type="staff"`;
       sql.query(command, (err, rows, fields) => {
         let userData = {
           time: Date(),
@@ -250,13 +250,13 @@ export default class AuthService {
     });
   };
 
-  StaffRegister = (req, res) => {
+  staffRegister = (req, res) => {
     return new Promise((resolve) => {
       let data = req.body;
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
       let command = `INSERT INTO ${this.userModel.table_name}(email,password,user_type) VALUES ("${data.email}","${data.password}","staff");
       SET @userId = LAST_INSERT_ID();
-      INSERT INTO ${this.staffModel.table_name}(user_id,firstname,lastname,contact_no,empid created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.contact_no}","${data.empid}","${timeStamp}","${timeStamp}");`;
+      INSERT INTO ${this.staffModel.table_name}(user_id,firstname,lastname,contact_no,empid, created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.contact_no}","${data.empid}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log(err);

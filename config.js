@@ -1,2 +1,3 @@
 const jwtSecretKey = "ecom_secret";
-export default jwtSecretKey;
+
+export default { jwtSecretKey };
