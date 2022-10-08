@@ -8,12 +8,12 @@ export default function (app) {
   let authcontroller = new AuthController(mgr);
 
   //Map controller callback functions for rest API routes
-  app.get("/api/sellers", controller.get);
-  app.get("/api/sellers/:id", controller.getById);
-  app.put("/api/sellers/:id", controller.update);
+  app.get("/api/seller", controller.get);
+  app.get("/api/seller/:id", controller.getById);
+  app.put("/api/seller/:id", controller.update);
 
   // Seller Auth
-  app.post("/api/customer/login", authcontroller.sellerLogin);
-  app.post("/api/customer/login", authcontroller.sellerRegister);
-  app.put("/api/product/:id", authcontroller.updateSellerPassword);
+  app.post("/api/seller/login", authcontroller.sellerLogin);
+  app.post("/api/seller/register", authcontroller.sellerRegister);
+  app.put("/api/seller/:id", authcontroller.updateSellerPassword);
 }

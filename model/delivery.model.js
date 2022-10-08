@@ -2,13 +2,13 @@ export default class Deliveries {
   //Parameterized constructor
   constructor(id, order_id, vendor_id, location, created_at, modified_at) {
     this.id = id;
-    this.order_is = order_id;
+    this.order_id = order_id;
     this.vendor_id = vendor_id;
     this.location = location;
     this.created_at = created_at;
     this.modified_at = modified_at;
 
-    this.table_name = "deliveries";
+    this.table_name = "orders";
   }
 
   display() {

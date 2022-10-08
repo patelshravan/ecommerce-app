@@ -3,6 +3,9 @@ import expressSession from "express-session";
 import cors from "cors";
 import productRoutes from "./routes/product.router.js";
 import customerRoutes from "./routes/customer.router.js";
+import vendorRoutes from "./routes/vendor.router.js";
+import staffRoutes from "./routes/staff.router.js";
+import sellerRoutes from "./routes/seller.router.js";
 // import routes from "./routes/router.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
@@ -28,6 +31,9 @@ app.use(sessionMiddlware);
 //
 productRoutes(app);
 customerRoutes(app);
+sellerRoutes(app);
+staffRoutes(app);
+vendorRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`App Server is Listening on Port ${PORT}`);

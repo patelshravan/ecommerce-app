@@ -1,4 +1,4 @@
-import mysql from "my-sql";
+import mysql from "mysql";
 
 const connUri = {
   host: "localhost",
