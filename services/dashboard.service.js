@@ -33,7 +33,7 @@ export default class DashboardService {
     });
   };
 
-  getTotalAvailableProducts = () => {
+  getAvailableProducts = () => {
     return new Promise((resolve) => {
       let command = `SELECT title,id,quantity FROM ${this.productModel.table_name} WHERE quantity > 0;`;
       sql.query(command, (err, rows, field) => {
@@ -72,7 +72,7 @@ export default class DashboardService {
     });
   };
 
-  getCustomerPersonalProfile = (id) => {
+  getCustomerProfile = (id) => {
     return new Promise((resolve) => {
       let command = `SELECT
       ${this.customerModel.table_name}.firstname as firstname,
