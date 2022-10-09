@@ -29,3 +29,9 @@ GET ORDER LIST
 GET CATEGORIES LIST
 
 -- BANKING POINT OF VIEW --
+FUND TRANSFER QUERY
+
+ORDERS PAYMENT QUERY
+-- Placing a order
+-- managing payment 
+-- discount calculating
