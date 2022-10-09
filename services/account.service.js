@@ -20,12 +20,26 @@ export default class AccountsService {
     });
   };
 
-  getById = (id) => {
+  getByNumber = (req) => {
     return new Promise((resolve) => {
-      let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
+      let accountNumber = req.params.accountnumber;
+      console.log(req.params.accountnumber);
+      let command = `SELECT * FROM ${this.model.table_name} WHERE account_number="${accountNumber}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
           resolve({ error: "Unable to fetch accounts by id." });
+        }
+        resolve({ data: rows });
+      });
+    });
+  };
+
+  getByUserId = (id) => {
+    return new Promise((resolve) => {
+      let command = `SELECT * FROM ${this.model.table_name} WHERE user_id="${id}"`;
+      sql.query(command, (err, rows, fields) => {
+        if (err) {
+          resolve({ error: "Unable to fetch accounts by user id." });
         }
         resolve({ data: rows });
       });
