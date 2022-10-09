@@ -70,7 +70,7 @@ CREATE TABLE products(
 );
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    status VARCHAR(20),
+    status ENUM ('delivered', 'placed', 'intransit', 'failed', 'dispatched'),
     customer_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,
