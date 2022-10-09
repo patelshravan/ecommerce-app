@@ -75,27 +75,27 @@ export default class DashboardService {
   getCustomerPersonalProfile = (id) => {
     return new Promise((resolve) => {
       let command = `SELECT
-      ${this.model.table_name}.firstname as firstname,
-      ${this.model.table_name}.email as email,
-      ${this.model.table_name}.contact_no as contact_no,
-      ${this.model.table_name}.status as order_status,
-      ${this.model.table_name}.modified_at as order_date,
-      ${this.model.table_name}.quantity as order_quantity,
-      ${this.model.table_name}.price as order_item_price,
-      ${this.model.table_name}.title as product_title,
-      ${this.model.table_name}.price as product_current_price,
-      ${this.model.table_name}.mode_of_payment as mode_of_payment,
-      ${this.model.table_name}.id as customer_id,
-      ${this.model.table_name}.id as order_id,
-      ${this.model.table_name}.id as ordersData_id,
-      ${this.model.table_name}.id as product_id,
-      ${this.model.table_name}.id as payment_id
-      FROM ${this.model.table_name}
-      JOIN ${this.model.table_name} ON ${this.model.table_name}.product_id = ${this.model.table_name}.id
-      JOIN ${this.model.table_name} ON ${this.model.table_name}.order_id = order_id
-      JOIN ${this.model.table_name} ON orders.id = ${this.model.table_name}.order_id
-      JOIN ${this.model.table_name} ON orders.customer_id = ${this.model.table_name}.id
-      WHERE ${this.model.table_name}.id=${id} AND ${this.model.table_name}.product_id = ${this.model.table_name}.id AND ${this.model.table_name}.id = ${this.model.table_name}.order_id AND ${this.model.table_name}.customer_id = ${this.model.table_name}.id AND ${this.model.table_name}.id = ${this.model.table_name}.order_id;`;
+      ${this.customerModel.table_name}.firstname as firstname,
+      ${this.customerModel.table_name}.email as email,
+      ${this.customerModel.table_name}.contact_no as contact_no,
+      ${this.orderModel.table_name}.status as order_status,
+      ${this.orderModel.table_name}.modified_at as order_date,
+      ${this.ordersdataModel.table_name}.quantity as order_quantity,
+      ${this.ordersdataModel.table_name}.price as order_item_price,
+      ${this.productModel.table_name}.title as product_title,
+      ${this.productModel.table_name}.price as product_current_price,
+      ${this.paymentModel.table_name}.mode_of_payment as mode_of_payment,
+      ${this.customerModel.table_name}.id as customer_id,
+      ${this.orderModel.table_name}.id as order_id,
+      ${this.ordersdataModel.table_name}.id as ordersData_id,
+      ${this.productModel.table_name}.id as product_id,
+      ${this.paymentModel.table_name}.id as payment_id
+      FROM ${this.ordersdataModel.table_name}
+      JOIN ${this.productModel.table_name} ON ${this.ordersdataModel.table_name}.product_id = ${this.productModel.table_name}.id
+      JOIN ${this.orderModel.table_name} ON ${this.ordersdataModel.table_name}.order_id = order_id
+      JOIN ${this.paymentModel.table_name} ON ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id
+      JOIN ${this.customerModel.table_name} ON ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id
+      WHERE ${this.customerModel.table_name}.id=${id} AND ${this.ordersdataModel.table_name}.product_id = ${this.productModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id AND ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.ordersdataModel.table_name}.order_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           resolve(err);
@@ -108,7 +108,7 @@ export default class DashboardService {
 
   getSellerProfile = () => {
     return new Promise((resolve) => {
-      let command = `SELECT name,location,email,contact_no FROM ${this.model.table_name};`;
+      let command = `SELECT name,location,email,contact_no FROM ${this.sellerModel.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           resolve(err);
@@ -122,14 +122,14 @@ export default class DashboardService {
   getSellerProducts = (id) => {
     return new Promise((resolve) => {
       let command = `SELECT 
-      sellers.name as sellers_name,
-      sellers.email as sellers_email,
-      products.title as product_title,
-      products.price as product_price,
-      products.quantity as product_quantity
-      FROM sellers 
-      JOIN products ON sellers.id = products.sellers_id 
-      WHERE sellers.id = ${id} AND sellers.id = products.sellers_id;`;
+      ${this.sellerModel.table_name}.name as seller_name,
+      ${this.sellerModel.table_name}.email as seller_email,
+      ${this.productModel.table_name}.title as product_title,
+      ${this.productModel.table_name}.price as product_price,
+      ${this.productModel.table_name}.quantity as product_quantity
+      FROM ${this.sellerModel.table_name} 
+      JOIN ${this.productModel.table_name} ON ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id 
+      WHERE ${this.sellerModel.table_name}.id = ${id} AND ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           resolve(err);
@@ -143,19 +143,19 @@ export default class DashboardService {
   getSellerOrders = (id) => {
     return new Promise((resolve) => {
       let command = `SELECT
-      sellers.name as sellers_name,
-      sellers.email as sellers_email,
-      products.title as product_title,
-      products.price as product_price,
-      products.quantity as product_quantity,
-      ordersData.quantity as order_quantity,
-      ordersData.price as order_item_price,
-      orders.status as order_status
-      FROM ordersData
-      JOIN orders ON ordersData.order_id = orders.id
-      JOIN products ON products.id = ordersData.product_id
-      JOIN sellers ON sellers.id = products.sellers_id
-      WHERE sellers.id= ${id} AND ordersData.order_id = orders.id AND products.id = ordersData.product_id AND sellers.id = products.sellers_id;`;
+      ${this.sellerModel.table_name}.name as seller_name,
+      ${this.sellerModel.table_name}.email as seller_email,
+      ${this.productModel.table_name}.title as product_title,
+      ${this.productModel.table_name}.price as product_price,
+      ${this.productModel.table_name}.quantity as product_quantity,
+      ${this.ordersdataModel.table_name}.quantity as order_quantity,
+      ${this.ordersdataModel.table_name}.price as order_item_price,
+      ${this.orderModel.table_name}.status as order_status
+      FROM  ${this.ordersdataModel.table_name}
+      JOIN  ${this.orderModel.table_name} ON  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id
+      JOIN  ${this.productModel.table_name} ON  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id
+      JOIN  ${this.sellerModel.table_name} ON  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id
+      WHERE  ${this.sellerModel.table_name}.id= ${id} AND  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id AND  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id AND  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           resolve(err);
