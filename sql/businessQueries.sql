@@ -121,12 +121,12 @@ FROM orders
 GROUP BY status;
 
 -- GET categories LIST
-SELECT products.categories_id,
+SELECT products.category_id,
     categories.name,
     COUNT(*) as count
 FROM products
-    JOIN categories ON (products.categories_id = categories.id)
-GROUP BY products.categories_id;
+    JOIN categories ON (products.category_id = categories.id)
+GROUP BY products.category_id;
 
 -- BUSINESS RELATED
 -- For Placing a Order

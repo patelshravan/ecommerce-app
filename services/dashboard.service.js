@@ -5,6 +5,7 @@ import Product from "../model/product.model.js";
 import Ordersdata from "../model/ordersdata.model.js";
 import Payments from "../model/payment.model.js";
 import Category from "../model/category.model.js";
+import Users from "../model/users.model.js";
 
 import sql from "./db/db.js";
 
@@ -18,6 +19,7 @@ export default class DashboardService {
     this.ordersdataModel = new Ordersdata();
     this.paymentModel = new Payments();
     this.categoryModel = new Category();
+    this.usersModel = new Users();
   }
 
   getOrderList = () => {
@@ -25,9 +27,12 @@ export default class DashboardService {
       let command = `SELECT status, COUNT(*) AS count FROM ${this.orderModel.table_name} GROUP BY status;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err);
+          resolve({error:"Unable to fetch orderslist"});
+
         } else {
-          resolve(rows);
+          console.log(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -38,9 +43,10 @@ export default class DashboardService {
       let command = `SELECT title,id,quantity FROM ${this.productModel.table_name} WHERE quantity > 0;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err)
+          resolve({error:"Unable to fetch available products."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -51,9 +57,9 @@ export default class DashboardService {
       let command = `SELECT title,id,quantity FROM ${this.productModel.table_name} WHERE quantity = 0;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          resolve({error: "Unable to fetch unavailable products."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -61,12 +67,14 @@ export default class DashboardService {
 
   getCategoryList = () => {
     return new Promise((resolve) => {
-      let command = `SELECT ${this.productModel.table_name}.category_id, ${this.categoryModel.table_name}.name, COUNT(*) as count FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON (${this.productModel.table_name}.category_id = ${this.categoryModel.table_name}.id) GROUP BY ${this.productModel.table_name}.categories_id;`;
+      let command = `SELECT ${this.productModel.table_name}.category_id, ${this.categoryModel.table_name}.name, COUNT(*) as count FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON (${this.productModel.table_name}.category_id = ${this.categoryModel.table_name}.id) GROUP BY ${this.productModel.table_name}.category_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err)
+          resolve({error: "Unable to fetch category list."});
         } else {
-          resolve(rows);
+          console.log(rows)
+          resolve({data: rows});
         }
       });
     });
@@ -76,7 +84,7 @@ export default class DashboardService {
     return new Promise((resolve) => {
       let command = `SELECT
       ${this.customerModel.table_name}.firstname as firstname,
-      ${this.customerModel.table_name}.email as email,
+      ${this.usersModel.table_name}.email as email,
       ${this.customerModel.table_name}.contact_no as contact_no,
       ${this.orderModel.table_name}.status as order_status,
       ${this.orderModel.table_name}.modified_at as order_date,
@@ -95,12 +103,14 @@ export default class DashboardService {
       JOIN ${this.orderModel.table_name} ON ${this.ordersdataModel.table_name}.order_id = order_id
       JOIN ${this.paymentModel.table_name} ON ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id
       JOIN ${this.customerModel.table_name} ON ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id
-      WHERE ${this.customerModel.table_name}.id=${id} AND ${this.ordersdataModel.table_name}.product_id = ${this.productModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id AND ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.ordersdataModel.table_name}.order_id;`;
+      JOIN ${this.usersModel.table_name} ON ${this.usersModel.table_name}.id = ${this.customerModel.table_name}.user_id
+      WHERE ${this.customerModel.table_name}.id=${id} AND ${this.ordersdataModel.table_name}.product_id = ${this.productModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id AND ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.ordersdataModel.table_name}.order_id AND ${this.usersModel.table_name}.id = ${this.customerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err);
+          resolve({error: "Unable to fetch customer profile."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -108,12 +118,13 @@ export default class DashboardService {
 
   getSellerProfile = () => {
     return new Promise((resolve) => {
-      let command = `SELECT name,location,email,contact_no FROM ${this.sellerModel.table_name};`;
+      let command = `SELECT name,location,contact_no,email FROM  ${this.sellerModel.table_name} JOIN  ${this.usersModel.table_name} ON  ${this.usersModel.table_name}.id =  ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err);
+          resolve({error: "Unable to fetch seller profile."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -123,18 +134,20 @@ export default class DashboardService {
     return new Promise((resolve) => {
       let command = `SELECT 
       ${this.sellerModel.table_name}.name as seller_name,
-      ${this.sellerModel.table_name}.email as seller_email,
+      ${this.usersModel.table_name}.email as seller_email,
       ${this.productModel.table_name}.title as product_title,
       ${this.productModel.table_name}.price as product_price,
       ${this.productModel.table_name}.quantity as product_quantity
       FROM ${this.sellerModel.table_name} 
       JOIN ${this.productModel.table_name} ON ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id 
-      WHERE ${this.sellerModel.table_name}.id = ${id} AND ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id;`;
+      JOIN ${this.usersModel.table_name} ON ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id
+      WHERE ${this.sellerModel.table_name}.id = ${id} AND ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id AND ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          console.log(err);
+          resolve({error: "Unable to fetch seller's products."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });
@@ -144,7 +157,7 @@ export default class DashboardService {
     return new Promise((resolve) => {
       let command = `SELECT
       ${this.sellerModel.table_name}.name as seller_name,
-      ${this.sellerModel.table_name}.email as seller_email,
+      ${this.usersModel.table_name}.email as seller_email,
       ${this.productModel.table_name}.title as product_title,
       ${this.productModel.table_name}.price as product_price,
       ${this.productModel.table_name}.quantity as product_quantity,
@@ -155,12 +168,13 @@ export default class DashboardService {
       JOIN  ${this.orderModel.table_name} ON  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id
       JOIN  ${this.productModel.table_name} ON  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id
       JOIN  ${this.sellerModel.table_name} ON  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id
-      WHERE  ${this.sellerModel.table_name}.id= ${id} AND  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id AND  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id AND  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id;`;
+      JOIN ${this.usersModel.table_name} ON ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id
+      WHERE  ${this.sellerModel.table_name}.id= ${id} AND  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id AND  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id AND  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id AND ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve(err);
+          resolve({error: "Unable to fetch seller's orders."});
         } else {
-          resolve(rows);
+          resolve({data: rows});
         }
       });
     });

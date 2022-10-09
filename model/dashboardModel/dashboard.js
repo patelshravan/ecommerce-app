@@ -41,7 +41,7 @@ exports.getZeroAvailableProducts = function () {
 
 exports.getCategoryList = function () {
   return new Promise((resolve) => {
-    let command = `SELECT products.categories_id, categories.name, COUNT(*) as count FROM products JOIN categories ON (products.categories_id = categories.id) GROUP BY products.categories_id;`;
+    let command = `SELECT products.category_id, categories.name, COUNT(*) as count FROM products JOIN categories ON (products.category_id = categories.id) GROUP BY products.category_id;`;
     sql.query(command, (err, rows, field) => {
       if (err) {
         resolve(err);
