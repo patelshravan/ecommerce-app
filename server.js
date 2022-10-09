@@ -8,7 +8,8 @@ import staffRoutes from "./routes/staff.router.js";
 import sellerRoutes from "./routes/seller.router.js";
 import orderRoutes from "./routes/order.router.js";
 import dashboardRoutes from "./routes/dashboard.router.js";
-// import routes from "./routes/router.js";
+import deliveryRoutes from "./routes/delivery.router.js";
+import feedbackRoutes from "./routes/feedback.router.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
 const app = express();
@@ -38,6 +39,8 @@ staffRoutes(app);
 vendorRoutes(app);
 orderRoutes(app);
 dashboardRoutes(app);
+deliveryRoutes(app);
+feedbackRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`App Server is Listening on Port ${PORT}`);

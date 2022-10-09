@@ -1,10 +1,10 @@
-import Delivery from "../model/delivery.model.js";
+import Feedbacks from "../model/feedback.model.js";
 import sql from "./db/db.js";
 
-export default class DeliveriesService {
+export default class FeedbacksService {
   //constructor Dependency Injection
   constructor() {
-    this.model = new Delivery();
+    this.model = new Feedbacks();
   }
 
   getAll = () => {
@@ -12,7 +12,7 @@ export default class DeliveriesService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch deliveries." });
+          resolve({ error: "Unable to fetch feedbacks." });
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class DeliveriesService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch delivery by id." });
+          resolve({ error: "Unable to fetch feedbacks by id." });
         }
         resolve({ data: rows });
       });
@@ -40,7 +40,7 @@ export default class DeliveriesService {
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log("Adding Delivery Err:", err);
-          resolve({ error: "Unable to insert a delivery." });
+          resolve({ error: "Unable to insert a feedback." });
         }
         resolve({ data: rows });
       });
@@ -53,7 +53,7 @@ export default class DeliveriesService {
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log(err);
-          resolve({ error: "Unable to delete a delivery." });
+          resolve({ error: "Unable to delete a feedback." });
         } else {
           resolve({ data: rows });
         }
@@ -68,7 +68,7 @@ export default class DeliveriesService {
       sql.query(command, (err, rows, fields) => {
         if (err) {
           onsole.log(err);
-          resolve({ error: "Unable to update a delivery." });
+          resolve({ error: "Unable to update a feedback." });
         } else {
           resolve({ data: rows });
         }
