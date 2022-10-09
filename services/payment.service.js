@@ -1,10 +1,12 @@
+import Orders from "../model/orders.model.js";
 import Payments from "../model/payment.model.js";
-import sql from "../model/db.js";
+import sql from "./db/db.js";
 
 export default class PaymentService {
   //constructor Dependency Injection
   constructor() {
     this.model = new Payments();
+    this.ordersModel = new Orders();
   }
 
   getAll = () => {
@@ -36,7 +38,8 @@ export default class PaymentService {
     return new Promise((resolve) => {
       let data = req.body;
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-      let command = `INSERT INTO ${this.model.table_name}(total_amount,discount_percentage,payable_amount,order_id,mode_of_payment,created_at,modified_at) values("${data.total_amount}","${data.discount_percentage}","${data.payable_amount}",${data.order_id},${data.mode_of_payment},"${timeStamp}","${timeStamp}");`;
+      let command = `INSERT INTO ${this.model.table_name}(total_amount,discount_percentage,payable_amount,order_id,mode_of_payment,created_at,modified_at) values("${data.total_amount}","${data.discount_percentage}","${data.payable_amount}",${data.order_id},${data.mode_of_payment},"${timeStamp}","${timeStamp}");
+      UPDATE ${this.ordersModel.table_name} SET paid = true; WHERE id=${data.order_id}`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
           console.log("Adding Payment Err:", err);

@@ -1,5 +1,5 @@
 import Delivery from "../model/delivery.model.js";
-import sql from "../model/db.js";
+import sql from "./db/db.js";
 
 export default class DeliveriesService {
   //constructor Dependency Injection

@@ -1,7 +1,8 @@
 import Orders from "../model/orders.model.js";
 import Ordersdata from "../model/ordersdata.model.js";
 import Payments from "../model/payment.model.js";
-import sql from "../model/db.js";
+import Product from "../model/product.model.js";
+import sql from "./db/db.js";
 
 export default class OrdersService {
   //constructor Dependency Injection
@@ -9,6 +10,7 @@ export default class OrdersService {
     this.orderModel = new Orders();
     this.ordersdataModel = new Ordersdata();
     this.paymentsModel = new Payments();
+    this.productModel = new Product();
   }
 
   getAll = () => {
@@ -40,9 +42,9 @@ export default class OrdersService {
     return new Promise((resolve) => {
       let data = req.body;
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-      let dataQuery = "";
+      let orderDataValues = "";
+      let productQuantityUpdateQuery = "";
       let amount = 0;
-
       for (let i = 0; i < data.products.length; i++) {
         let productId = data.products[i].id;
         let productPrice = data.products[i].price;
@@ -50,14 +52,16 @@ export default class OrdersService {
 
         amount += productPrice * productQuantity;
 
-        dataQuery += `(@order_id, ${productId}, ${productPrice}, ${productQuantity},"${timeStamp}", "${timeStamp}"),`;
+        orderDataValues += `(@order_id, ${productId}, ${productPrice}, ${productQuantity},"${timeStamp}", "${timeStamp}"),`;
+        productQuantityUpdateQuery += `UPDATE ${this.productModel.table_name} SET quantity = quantity - ${productQuantity} WHERE id = ${productId};`;
       }
-      dataQuery = dataQuery.slice(0, -1);
-
-      let command = `INSERT INTO ${this.orderModel.table_name} (status, customer_id, created_at, modified_at) VALUES ("${data.status}", ${data.customer_id}, "${timeStamp}", "${timeStamp}");
+      orderDataValues = orderDataValues.slice(0, -1);
+      let payableAmount = amount * (1 - data.discount_percentage);
+      let command = `INSERT INTO ${this.orderModel.table_name} (status, customer_id, created_at, modified_at) VALUES ("placed", ${data.customer_id}, "${timeStamp}", "${timeStamp}");
       SET @order_id = LAST_INSERT_ID();
-      INSERT INTO ${this.ordersdataModel.table_name} (order_id, product_id, price, quantity, created_at, modified_at) VALUES ${dataQuery};
-      INSERT INTO ${this.paymentsModel.table_name} (amount, mode_of_payment, order_id, created_at, modified_at) VALUES (${amount}, "${data.payment_mode}", @order_id, "${timeStamp}", "${timeStamp}");`;
+      INSERT INTO ${this.ordersdataModel.table_name} (order_id, product_id, price, quantity, created_at, modified_at) VALUES ${orderDataValues};
+      ${productQuantityUpdateQuery}
+      INSERT INTO ${this.paymentsModel.table_name} (total_amount, discount_percentage,payable_amount,mode_of_payment, order_id, created_at, modified_at) VALUES (${amount}, ${data.discount_percentage} ,${payableAmount}, "${data.payment_mode}", @order_id, "${timeStamp}", "${timeStamp}");`;
 
       sql.query(command, (err, rows, fields) => {
         if (err) {

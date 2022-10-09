@@ -59,7 +59,7 @@ CREATE TABLE products(
     title VARCHAR(20) NOT NULL,
     description VARCHAR(300),
     image_url VARCHAR(250),
-    quantity INT,
+    quantity INT NOT NULL CHECK (quantity >= 0),
     price FLOAT DEFAULT 0,
     category_id INT NOT NULL,
     seller_id INT NOT NULL,

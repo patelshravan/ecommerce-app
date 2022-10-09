@@ -1,5 +1,5 @@
 import Staff from "../model/staff.model.js";
-import sql from "../model/db.js";
+import sql from "./db/db.js";
 
 export default class StaffService {
   //constructor Dependency Injection

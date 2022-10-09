@@ -23,9 +23,9 @@ export default class OrdersController {
     res.send(result.data);
   };
 
-  placeorder = async (req, res) => {
+  placeOrder = async (req, res) => {
     console.log("Adding a Orders");
-    let result = await this.repoManager.placeorder(req);
+    let result = await this.repoManager.placeOrder(req);
     res.send(result.data);
   };
 

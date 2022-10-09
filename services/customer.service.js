@@ -1,5 +1,5 @@
 import Customer from "../model/customer.model.js";
-import sql from "../model/db.js";
+import sql from "./db/db.js";
 
 export default class CustomerService {
   //constructor Dependency Injection
