@@ -11,15 +11,9 @@ export default class TransactionController {
     res.send(allAccounts.data);
   };
 
-  getByNumber = async (req, res) => {
-    console.log("Fetching Transaction Details By Number");
-    let account = await this.repoManager.getByNumber(req);
-    res.send(account.data);
-  };
-
-  getByUserId = async (req, res) => {
+  getById = async (req, res) => {
     console.log("Fetching Transaction By User Id");
-    let account = await this.repoManager.getByUserId(req.params.id);
+    let account = await this.repoManager.getById(req.params.id);
     res.send(account);
   };
 
