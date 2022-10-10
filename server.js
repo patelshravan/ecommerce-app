@@ -33,7 +33,6 @@ var sessionMiddlware = expressSession({
 
 app.use(sessionMiddlware);
 
-//
 productRoutes(app);
 customerRoutes(app);
 sellerRoutes(app);
