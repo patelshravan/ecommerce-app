@@ -50,7 +50,13 @@ CREATE TABLE vendors(
 );
 CREATE TABLE categories(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(20) NOT NULL,
+    name ENUM (
+        'fashion',
+        'electronics',
+        'electric',
+        'fitness',
+        'audio'
+    ),
     created_at DATETIME,
     modified_at DATETIME
 );
@@ -70,7 +76,13 @@ CREATE TABLE products(
 );
 CREATE TABLE orders(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    status ENUM ('delivered', 'placed', 'intransit', 'failed', 'dispatched'),
+    status ENUM (
+        'delivered',
+        'placed',
+        'intransit',
+        'failed',
+        'dispatched'
+    ),
     customer_id INT NOT NULL,
     created_at DATETIME,
     modified_at DATETIME,

@@ -14,4 +14,8 @@ export default function (app) {
   app.get("/api/sellerprofile/:id", controller.getSellerProfile);
   app.get("/api/sellerorders/:id", controller.getSellerOrders);
   app.get("/api/sellerproducts/:id", controller.getSellerProducts);
+  app.get(
+    "/api/products/categories/name",
+    controller.getProductsByCategoryName
+  );
 }

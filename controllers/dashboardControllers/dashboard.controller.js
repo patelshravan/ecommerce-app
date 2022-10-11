@@ -52,4 +52,10 @@ export default class DashboardController {
     let result = await this.repoManager.getSellerProducts(req.params.id);
     res.send(result.data);
   };
+
+  getProductsByCategoryName = async (req, res) => {
+    console.log("Fetching products based on category name");
+    let result = await this.repoManager.getProductsByCategoriesName(req);
+    res.send(result.data);
+  };
 }
