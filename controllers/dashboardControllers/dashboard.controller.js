@@ -55,7 +55,7 @@ export default class DashboardController {
 
   getProductsByCategoryName = async (req, res) => {
     console.log("Fetching products based on category name");
-    let result = await this.repoManager.getProductsByCategoriesName(req);
+    let result = await this.repoManager.getProductsByCategoryName(req);
     res.send(result.data);
   };
 }

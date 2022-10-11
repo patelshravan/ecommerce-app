@@ -182,7 +182,7 @@ export default class DashboardService {
   getProductsByCategoryName = (req) => {
     return new Promise((resolve) => {
       let categoryName = req.params.name;
-      let command = `SELECT name, title,description,image_url,price,quantity FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON ${this.categoryModel.table_name}.id = ${this.productModel.table_name}.id; WHERE ${this.categoryModel.table_name}.name="${categoryName}"`;
+      let command = `SELECT name, title,description,image_url,price,quantity FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON ${this.categoryModel.table_name}.id = ${this.productModel.table_name}.id WHERE ${this.categoryModel.table_name}.name="${categoryName}";`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           console.log(err);
