@@ -58,4 +58,12 @@ export default class DashboardController {
     let result = await this.repoManager.getProductsByCategoryName(req);
     res.send(result.data);
   };
+
+  getCustomersOrdersByOrderId = async (req, res) => {
+    console.log("Fetching customer's orders based on order id");
+    let result = await this.repoManager.getCustomersOrdersByOrderId(
+      req.params.id
+    );
+    res.send(result.data);
+  };
 }

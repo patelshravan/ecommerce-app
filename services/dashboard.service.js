@@ -182,11 +182,26 @@ export default class DashboardService {
   getProductsByCategoryName = (req) => {
     return new Promise((resolve) => {
       let categoryName = req.params.name;
-      let command = `SELECT name, title,description,image_url,price,quantity FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON ${this.categoryModel.table_name}.id = ${this.productModel.table_name}.id WHERE ${this.categoryModel.table_name}.name="${categoryName}";`;
+      console.log(req.params.name);
+      let command = `SELECT name, title,description,image_url,price,quantity,category_id,seller_id FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON ${this.categoryModel.table_name}.id = ${this.productModel.table_name}.category_id WHERE ${this.categoryModel.table_name}.name="${categoryName}";`;
       sql.query(command, (err, rows, field) => {
         if (err) {
           console.log(err);
-          resolve({ error: "Unable to fetch products by categories." });
+          resolve({ error: "Unable to fetch orders by categories." });
+        } else {
+          resolve({ data: rows });
+        }
+      });
+    });
+  };
+
+  getCustomersOrdersByOrderId = (id) => {
+    return new Promise((resolve) => {
+      let command = `SELECT  firstname, lastname, status, customer_id, ${this.orderModel.table_name}.id as order_id FROM ${this.orderModel.table_name} JOIN ${this.customerModel.table_name} ON ${this.customerModel.table_name}.id = ${this.orderModel.table_name}.customer_id WHERE ${this.orderModel.table_name}.id = ${id};`;
+      sql.query(command, (err, rows, field) => {
+        if (err) {
+          console.log(err);
+          resolve({ error: "Unable to fetch customers orders by order id." });
         } else {
           resolve({ data: rows });
         }

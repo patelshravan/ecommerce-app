@@ -18,4 +18,5 @@ export default function (app) {
     "/api/products/categories/:name",
     controller.getProductsByCategoryName
   );
+  app.get("/api/customers/order/:id", controller.getCustomersOrdersByOrderId);
 }
