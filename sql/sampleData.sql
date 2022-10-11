@@ -311,11 +311,11 @@ INSERT INTO products(
         modified_at
     )
 VALUES(
-        "Samsung Galaxy S20",
-        "Smart Phone",
-        "https://m.media-amazon.com/images/I/81QVLzeVckL._SL1500_.jpg",
-        1,
-        29999,
+        "Allen Solly",
+        "Men's Regular Fit T-Shirt",
+        "https://m.media-amazon.com/images/I/61Ht616HQML._UY741_.jpg",
+        97,
+        419,
         @categories1Id,
         @sellers1Id,
         "2022-02-10",
@@ -446,10 +446,10 @@ INSERT INTO feedbacks(
         modified_at
     )
 values(
-        "https://m.media-amazon.com/images/I/81QVLzeVckL._SL1500_.jpg",
+        "https://m.media-amazon.com/images/I/61Ht616HQML._UY741_.jpg",
         @product1Id,
         @customer1Id,
-        "Nice smart phone",
+        "Nice shirt",
         "2022-02-10",
         "2021-09-26"
     );
