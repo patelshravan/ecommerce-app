@@ -112,7 +112,7 @@ INSERT INTO accounts(
         modified_at
     )
 values(
-        "456151126165",
+        "1234",
         @user3Id,
         15000,
         "2022-02-10",
@@ -127,7 +127,7 @@ INSERT INTO accounts(
         modified_at
     )
 values(
-        "45615776165",
+        "1122",
         @user5Id,
         20000,
         "2022-02-10",

@@ -7,7 +7,7 @@ export default function (app) {
 
   //Map controller callback functions for rest API routes
   app.get("/api/transactions", controller.get);
-  app.post("/api/transactions/", controller.post);
   app.get("/api/transactions/:id", controller.getById);
   app.put("/api/transactions/:id", controller.update);
+  app.post("/api/maketransfer", controller.makeTransfer);
 }

@@ -47,15 +47,15 @@ export default class TransactionService {
     });
   };
 
-  post = (req) => {
+  makeTransfer = (req) => {
     return new Promise((resolve) => {
       let data = req.body;
       let timeStamp = new Date().toISOString().slice(0, 19).replace("T", " ");
-      let command = `INSERT INTO ${this.model.table_name}(order_id,location,vendor_id,created_at,modified_at) values("${data.order_id}","${data.location}","${data.vendor_id}","${timeStamp}","${timeStamp}");`;
+      let command = `CALL FundsTransfer(${data.amount}, ${data.from_account}, ${data.to_account}, "${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log("Adding Delivery Err:", err);
-          resolve({ error: "Unable to insert a feedback." });
+          console.log("Transaction Err:", err);
+          resolve({ error: "Unable to make a transactions." });
         }
         resolve({ data: rows });
       });

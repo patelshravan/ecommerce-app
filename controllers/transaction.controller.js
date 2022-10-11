@@ -23,9 +23,9 @@ export default class TransactionController {
     res.send(result.data);
   };
 
-  post = async (req, res) => {
-    console.log("posting Transaction");
-    let result = await this.repoManager.post(req);
+  makeTransfer = async (req, res) => {
+    console.log("making transfer");
+    let result = await this.repoManager.makeTransfer(req);
     res.send(result.data);
   };
 }
