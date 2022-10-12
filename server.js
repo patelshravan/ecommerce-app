@@ -13,6 +13,7 @@ import feedbackRoutes from "./routes/feedback.router.js";
 import accountRoutes from "./routes/account.router.js";
 import categoryRoutes from "./routes/category.router.js";
 import transactionRoutes from "./routes/transaction.router.js";
+import cartRoutes from "./routes/cart.router.js";
 
 const oneDay = 1000 * 60 * 60 * 24;
 const app = express();
@@ -46,6 +47,7 @@ feedbackRoutes(app);
 accountRoutes(app);
 categoryRoutes(app);
 transactionRoutes(app);
+cartRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`App Server is Listening on Port ${PORT}`);
