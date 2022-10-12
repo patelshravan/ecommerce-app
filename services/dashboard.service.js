@@ -27,8 +27,7 @@ export default class DashboardService {
       let command = `SELECT status, COUNT(*) AS count FROM ${this.orderModel.table_name} GROUP BY status;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch orderslist" });
+          throw err;
         } else {
           console.log(rows);
           resolve({ data: rows });
@@ -42,8 +41,7 @@ export default class DashboardService {
       let command = `SELECT title,id,quantity FROM ${this.productModel.table_name} WHERE quantity > 0;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch available products." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -56,7 +54,7 @@ export default class DashboardService {
       let command = `SELECT title,id,quantity FROM ${this.productModel.table_name} WHERE quantity = 0;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch unavailable products." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -69,8 +67,7 @@ export default class DashboardService {
       let command = `SELECT ${this.productModel.table_name}.category_id, ${this.categoryModel.table_name}.name, COUNT(*) as count FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON (${this.productModel.table_name}.category_id = ${this.categoryModel.table_name}.id) GROUP BY ${this.productModel.table_name}.category_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch category list." });
+          throw err;
         } else {
           console.log(rows);
           resolve({ data: rows });
@@ -106,8 +103,7 @@ export default class DashboardService {
       WHERE ${this.customerModel.table_name}.id=${id} AND ${this.ordersdataModel.table_name}.product_id = ${this.productModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.paymentModel.table_name}.order_id AND ${this.orderModel.table_name}.customer_id = ${this.customerModel.table_name}.id AND ${this.orderModel.table_name}.id = ${this.ordersdataModel.table_name}.order_id AND ${this.usersModel.table_name}.id = ${this.customerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch customer profile." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -120,8 +116,7 @@ export default class DashboardService {
       let command = `SELECT name,location,contact_no,email FROM  ${this.sellerModel.table_name} JOIN  ${this.usersModel.table_name} ON  ${this.usersModel.table_name}.id =  ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch seller profile." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -143,8 +138,7 @@ export default class DashboardService {
       WHERE ${this.sellerModel.table_name}.id = ${id} AND ${this.sellerModel.table_name}.id = ${this.productModel.table_name}.seller_id AND ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch seller's products." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -171,7 +165,7 @@ export default class DashboardService {
       WHERE  ${this.sellerModel.table_name}.id= ${id} AND  ${this.ordersdataModel.table_name}.order_id =  ${this.orderModel.table_name}.id AND  ${this.productModel.table_name}.id =  ${this.ordersdataModel.table_name}.product_id AND  ${this.sellerModel.table_name}.id =  ${this.productModel.table_name}.seller_id AND ${this.usersModel.table_name}.id = ${this.sellerModel.table_name}.user_id;`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch seller's orders." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -186,8 +180,7 @@ export default class DashboardService {
       let command = `SELECT name, title,description,image_url,price,quantity,category_id,seller_id FROM ${this.productModel.table_name} JOIN ${this.categoryModel.table_name} ON ${this.categoryModel.table_name}.id = ${this.productModel.table_name}.category_id WHERE ${this.categoryModel.table_name}.name="${categoryName}";`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch orders by categories." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -200,8 +193,7 @@ export default class DashboardService {
       let command = `SELECT  firstname, lastname, status, customer_id, ${this.orderModel.table_name}.id as order_id FROM ${this.orderModel.table_name} JOIN ${this.customerModel.table_name} ON ${this.customerModel.table_name}.id = ${this.orderModel.table_name}.customer_id WHERE ${this.orderModel.table_name}.id = ${id};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to fetch customers orders by order id." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

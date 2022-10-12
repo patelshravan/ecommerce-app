@@ -12,7 +12,7 @@ export default class CategoryService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch categories." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class CategoryService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch categories by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -39,8 +39,7 @@ export default class CategoryService {
       let command = `INSERT INTO ${this.model.table_name}(order_id,location,vendor_id,created_at,modified_at) values("${data.order_id}","${data.location}","${data.vendor_id}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log("Adding Category Err:", err);
-          resolve({ error: "Unable to insert a category." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -53,8 +52,7 @@ export default class CategoryService {
       let command = `UPDATE ${this.model.table_name} SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update a categories." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

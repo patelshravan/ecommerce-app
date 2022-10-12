@@ -30,8 +30,7 @@ export default class AuthService {
         };
 
         if (err) {
-          console.log("Error:", err);
-          resolve({ error: "Unable to Login" });
+          throw err;
         }
         let allUsersStr = JSON.stringify(rows);
         var allUsers = JSON.parse(allUsersStr);
@@ -43,7 +42,7 @@ export default class AuthService {
           console.log("Login Successful:", userData);
           resolve({ message: "Login Success" });
         } else {
-          resolve({ error: "Invalid User" });
+          throw "Invalid User";
         }
       });
     });
@@ -58,8 +57,7 @@ export default class AuthService {
       INSERT INTO ${this.customerModel.table_name}(user_id,firstname,lastname,contact_no, location, created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.contact_no}","${data.location}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Failed to register customer" });
+          throw err;
         } else {
           resolve({ message: "Customer Registered!" });
         }
@@ -75,8 +73,7 @@ export default class AuthService {
       let command = `UPDATE ${this.userModel.table_name} SET password="${password}", modified_at="${timeStamp}" WHERE email="${user.email}" AND user_type="customer"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update password." });
+          throw err;
         } else {
           resolve({ message: "Password Updated!" });
         }
@@ -97,8 +94,7 @@ export default class AuthService {
         };
 
         if (err) {
-          console.log("Error:", err);
-          resolve({ error: "Unable to Login" });
+          throw err;
         }
         let allUsersStr = JSON.stringify(rows);
         var allUsers = JSON.parse(allUsersStr);
@@ -110,7 +106,7 @@ export default class AuthService {
           console.log("Login Successful:", userData);
           resolve(userData);
         } else {
-          resolve("Invalid User");
+          throw "Invalid User";
         }
       });
     });
@@ -125,8 +121,7 @@ export default class AuthService {
       INSERT INTO ${this.sellerModel.table_name}(user_id,name,contact_no, location, created_at, modified_at) values(@userId,"${data.name}","${data.contact_no}","${data.location}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Failed to register seller" });
+          throw err;
         } else {
           resolve({ message: "Seller Registered!" });
         }
@@ -142,8 +137,7 @@ export default class AuthService {
       let command = `UPDATE ${this.userModel.table_name} SET password="${password}", modified_at="${timeStamp}" WHERE email="${user.email}" AND user_type="seller"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update password." });
+          throw err;
         } else {
           resolve({ message: "Password Updated!" });
         }
@@ -164,8 +158,7 @@ export default class AuthService {
         };
 
         if (err) {
-          console.log("Error:", err);
-          resolve({ error: "Unable to Login" });
+          throw err;
         }
         let allUsersStr = JSON.stringify(rows);
         var allUsers = JSON.parse(allUsersStr);
@@ -177,7 +170,7 @@ export default class AuthService {
           console.log("Login Successful:", userData);
           resolve(userData);
         } else {
-          resolve("Invalid User");
+          throw "Invalid User";
         }
       });
     });
@@ -192,8 +185,7 @@ export default class AuthService {
       INSERT INTO ${this.vendorModel.table_name}(user_id,name,contact_no, created_at, modified_at) values(@userId,"${data.name}","${data.contact_no}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Failed to register vendor" });
+          throw err;
         } else {
           resolve({ message: "Vendor Registered!" });
         }
@@ -209,8 +201,7 @@ export default class AuthService {
       let command = `UPDATE ${this.userModel.table_name} SET password="${password}", modified_at="${timeStamp}" WHERE email="${user.email}" AND user_type="vendor"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update password." });
+          throw err;
         } else {
           resolve({ message: "Password Updated!" });
         }
@@ -231,8 +222,7 @@ export default class AuthService {
         };
 
         if (err) {
-          console.log("Error:", err);
-          resolve({ error: "Unable to Login" });
+          throw err;
         }
         let allUsersStr = JSON.stringify(rows);
         var allUsers = JSON.parse(allUsersStr);
@@ -244,7 +234,7 @@ export default class AuthService {
           console.log("Login Successful:", userData);
           resolve(userData);
         } else {
-          resolve("Invalid User");
+          throw "Invalid User";
         }
       });
     });
@@ -259,8 +249,7 @@ export default class AuthService {
       INSERT INTO ${this.staffModel.table_name}(user_id,firstname,lastname,contact_no,empid, created_at, modified_at) values(@userId,"${data.firstname}","${data.lastname}","${data.contact_no}","${data.empid}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Failed to register staff" });
+          throw err;
         } else {
           resolve({ message: "Staff Registered!" });
         }
@@ -276,8 +265,7 @@ export default class AuthService {
       let command = `UPDATE ${this.userModel.table_name} SET password="${password}", modified_at="${timeStamp}" WHERE email="${user.email}" AND user_type="staff"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update password." });
+          throw err;
         } else {
           resolve({ message: "Password Updated!" });
         }

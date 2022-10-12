@@ -12,7 +12,7 @@ export default class AccountsService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch accounts." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -27,7 +27,7 @@ export default class AccountsService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE account_number="${accountNumber}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch accounts by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -39,7 +39,7 @@ export default class AccountsService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE user_id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch accounts by user id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -52,8 +52,7 @@ export default class AccountsService {
       let command = `UPDATE ${this.model.table_name} SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update a accounts." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

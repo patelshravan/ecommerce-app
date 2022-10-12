@@ -18,7 +18,7 @@ export default class OrdersService {
       let command = `SELECT * FROM ${this.orderModel.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch orders." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -31,7 +31,7 @@ export default class OrdersService {
       let command = `SELECT * FROM ${this.orderModel.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch orders by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -65,8 +65,7 @@ export default class OrdersService {
 
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to place order." });
+          throw err;
         } else {
           resolve({ message: "Inserted!" });
         }
@@ -79,8 +78,7 @@ export default class OrdersService {
       let command = `DELETE FROM ${this.orderModel.table_name} Where id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to delete a order." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -94,8 +92,7 @@ export default class OrdersService {
       let command = `UPDATE ${this.orderModel.table_name} SET quantity="${data.quantity}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          onsole.log(err);
-          resolve({ error: "Unable to update a order." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

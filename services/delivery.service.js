@@ -12,7 +12,7 @@ export default class DeliveriesService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch deliveries." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class DeliveriesService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch delivery by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -39,8 +39,7 @@ export default class DeliveriesService {
       let command = `INSERT INTO ${this.model.table_name}(order_id,location,vendor_id,created_at,modified_at) values("${data.order_id}","${data.location}","${data.vendor_id}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log("Adding Delivery Err:", err);
-          resolve({ error: "Unable to insert a delivery." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -52,8 +51,7 @@ export default class DeliveriesService {
       let command = `DELETE FROM ${this.model.table_name} Where id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to delete a delivery." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -67,8 +65,7 @@ export default class DeliveriesService {
       let command = `UPDATE ${this.model.table_name} SET quantity="${data.order_id}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          onsole.log(err);
-          resolve({ error: "Unable to update a delivery." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
