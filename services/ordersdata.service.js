@@ -12,7 +12,7 @@ export default class OrdersService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch ordersdata." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class OrdersService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch ordersdata by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -39,8 +39,7 @@ export default class OrdersService {
       let command = `INSERT INTO ordersData(quantity,price,order_id,product_id,created_at,modified_at) values("${data.quantity}","${data.price}","${data.order_id}","${data.product_id}","${timeStamp}","${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to insert ordersdata." });
+          throw err;
         } else {
           resolve({ message: "Inserted!" });
         }
@@ -53,8 +52,7 @@ export default class OrdersService {
       let command = `DELETE FROM ${this.model.table_name} Where id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to delete a ordersdata." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -68,8 +66,7 @@ export default class OrdersService {
       let command = `UPDATE ${this.model.table_name} SET quantity="${data.quantity}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          onsole.log(err);
-          resolve({ error: "Unable to update a ordersdata." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

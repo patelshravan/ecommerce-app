@@ -12,7 +12,7 @@ export default class SellerService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch sellers." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class SellerService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch sellers by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -38,8 +38,7 @@ export default class SellerService {
       let command = `UPDATE ${this.model.table_name} SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update a seller." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

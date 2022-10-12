@@ -14,7 +14,7 @@ export default class PaymentService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch payments." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -27,7 +27,7 @@ export default class PaymentService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch payment by id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -42,8 +42,7 @@ export default class PaymentService {
       UPDATE ${this.ordersModel.table_name} SET paid = true; WHERE id=${data.order_id}`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log("Adding Payment Err:", err);
-          resolve({ error: "Unable to insert a payment." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -55,8 +54,7 @@ export default class PaymentService {
       let command = `DELETE FROM ${this.model.table_name} Where id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to delete a payment." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -70,8 +68,7 @@ export default class PaymentService {
       let command = `UPDATE ${this.model.table_name} SET quantity="${data.quantity}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          onsole.log(err);
-          resolve({ error: "Unable to update a payment." });
+          throw err;
         } else {
           resolve({ data: rows });
         }

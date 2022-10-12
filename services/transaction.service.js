@@ -12,7 +12,7 @@ export default class TransactionService {
       let command = `SELECT * FROM ${this.model.table_name};`;
       sql.query(command, (err, rows, field) => {
         if (err) {
-          resolve({ error: "Unable to fetch transactions." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -25,7 +25,7 @@ export default class TransactionService {
       let command = `SELECT * FROM ${this.model.table_name} WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          resolve({ error: "Unable to fetch transactions by user id." });
+          throw err;
         }
         resolve({ data: rows });
       });
@@ -38,8 +38,7 @@ export default class TransactionService {
       let command = `UPDATE ${this.model.table_name} SET contact_no="${data.contact_no}", modified_at="${timeStamp}" WHERE id="${id}"`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log(err);
-          resolve({ error: "Unable to update a transactions." });
+          throw err;
         } else {
           resolve({ data: rows });
         }
@@ -54,8 +53,7 @@ export default class TransactionService {
       let command = `CALL FundsTransfer(${data.amount}, ${data.from_account}, ${data.to_account}, "${timeStamp}");`;
       sql.query(command, (err, rows, fields) => {
         if (err) {
-          console.log("Transaction Err:", err);
-          resolve({ error: "Unable to make a transactions." });
+          throw err;
         }
         resolve({ data: rows });
       });
