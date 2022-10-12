@@ -1,5 +1,4 @@
 -- FundsTransfer Query
-
 CREATE DEFINER = `root` @`localhost` PROCEDURE `FundsTransfer`(
     amount float,
     account_to VARCHAR(50),
@@ -19,11 +18,8 @@ SET balance = balance + amount
 WHERE account_number = account_to;
 COMMIT;
 END;
-
-CALL FundsTransfer(200, "456151126165", "45615156165", "2021-09-26");
-
+CALL FundsTransfer(200, "1234", "1122", "2021-09-26");
 -- ORDER PAYMENT 
-
 CREATE DEFINER = `root` @`localhost` PROCEDURE `OrderPayment`(
     totalAmount float,
     discountPercentage float,
@@ -67,10 +63,7 @@ UPDATE orders
 SET paid = true
 WHERE id = orderId;
 COMMIT;
-END 
-
--- MAKE SAMPLE ORDER TABLE
-
+END -- MAKE SAMPLE ORDER TABLE
 SET @totalAmount = 1000;
 SET @discountPercentage = 10;
 SET @orderId = 8;
